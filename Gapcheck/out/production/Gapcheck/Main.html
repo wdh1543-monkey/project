@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>GapCheck - 전단지 스캔</title>
+    <style>
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        body { font-family: 'Pretendard', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#F1F8E8] min-h-screen">
+
+<header class="bg-[#1A5319] text-white px-6 py-3 flex justify-between items-center shadow-sm">
+    <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-[#95D2B3] rounded-lg flex items-center justify-center">
+                <span class="text-[10px] font-bold">GC</span>
+            </div>
+            <span class="text-xl font-bold tracking-tight text-[#E8F5E9]">GapCheck</span>
+        </div>
+
+        <div class="relative hidden md:block">
+                <span class="absolute inset-y-0 left-3 flex items-center text-white/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </span>
+            <label>
+                <input type="text" placeholder="상품명 또는 마트 검색..."
+                       class="bg-white/10 text-sm text-white placeholder-white/50 pl-10 pr-4 py-2 rounded-full w-[400px] border border-white/20 focus:outline-none focus:bg-white/20 transition-all">
+            </label>
+        </div>
+    </div>
+
+    <div class="flex items-center gap-4">
+        <button class="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-4 py-1.5 rounded-full text-xs font-medium transition-all">
+            📸 전단지 스캔
+        </button>
+        <div class="w-9 h-9 bg-gray-400 rounded-full border-2 border-white/20 overflow-hidden">
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="profile">
+        </div>
+    </div>
+</header>
+
+<nav class="max-w-4xl mx-auto px-6 py-4 text-[13px] text-gray-500">
+    홈 > <span class="text-gray-800 font-medium">전단지 스캔</span>
+</nav>
+
+<main class="max-w-2xl mx-auto px-6 pb-20 text-center">
+
+    <div class="mb-10">
+        <h1 class="text-[28px] font-bold text-[#111827] mb-3">전단지 이미지 업로드</h1>
+        <p class="text-[14px] text-gray-500 leading-relaxed">
+            마트 전단지 사진을 업로드하면 도소매가를 자동으로 비교해드려요.<br>
+            <span class="text-gray-400">선명하게 찍힌 이미지일수록 인식률이 높아집니다</span>
+        </p>
+    </div>
+
+    <div class="bg-white border-[2px] border-dashed border-[#95D2B3] rounded-[32px] p-12 mb-6 shadow-sm hover:border-[#2E7D32] transition-colors group">
+        <div class="flex justify-center mb-6">
+            <div class="relative">
+                <div class="absolute -inset-1 bg-green-100 rounded-full blur opacity-30"></div>
+                <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" class="relative w-24 h-24 opacity-80" alt="file-icon">
+            </div>
+        </div>
+
+        <h2 class="text-xl font-bold text-[#111827] mb-3 group-hover:text-[#2E7D32] transition-colors">전단지 이미지를 여기에 끌어다 놓거나</h2>
+        <p class="text-[13px] text-gray-400 mb-8 leading-tight">
+            JPG, PNG, PDF 파일을 지원합니다<br>
+            최대 파일 크기 20MB · 한 번에 최대 5장
+        </p>
+
+        <button class="bg-[#2E7D32] hover:bg-[#1B5E20] text-white px-10 py-3.5 rounded-xl font-bold flex items-center gap-2 mx-auto shadow-lg shadow-green-900/20 active:scale-95 transition-all">
+            🖼️ 이미지 파일 선택
+        </button>
+
+        <div class="flex justify-center gap-2 mt-8">
+            <span class="px-3 py-1 bg-[#F1F8E8] text-[11px] font-bold text-[#2E7D32] rounded-full border border-[#95D2B3]/30">JPG</span>
+            <span class="px-3 py-1 bg-[#F1F8E8] text-[11px] font-bold text-[#2E7D32] rounded-full border border-[#95D2B3]/30">PNG</span>
+            <span class="px-3 py-1 bg-[#F1F8E8] text-[11px] font-bold text-[#2E7D32] rounded-full border border-[#95D2B3]/30">PDF</span>
+            <span class="px-3 py-1 bg-[#F1F8E8] text-[11px] font-bold text-[#2E7D32] rounded-full border border-[#95D2B3]/30">HEIR</span>
+        </div>
+    </div>
+
+    <div class="text-[13px] text-gray-400 mb-6">또는 카메라로 직접 촬영</div>
+
+    <button class="w-full bg-white border border-gray-200 py-4 rounded-2xl flex justify-center items-center gap-3 hover:bg-gray-50 hover:border-gray-300 active:bg-gray-100 transition-all mb-10 shadow-sm">
+        <span class="text-xl">📷</span>
+        <span class="font-bold text-gray-700">카메라로 전단지 촬영하기</span>
+    </button>
+
+    <div class="bg-white/70 border border-white p-8 rounded-[32px] text-left shadow-sm backdrop-blur-sm">
+        <h3 class="font-bold text-[15px] mb-6 flex items-center gap-2">
+            <span class="text-lg">💡</span> 잘 인식되는 이미지 촬영 팁
+        </h3>
+
+        <ul class="space-y-5">
+            <li class="flex items-center gap-4">
+                <div class="bg-[#E8F5E9] p-2.5 rounded-xl text-[#2E7D32] shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                </div>
+                <p class="text-[14px] text-gray-600">전단지 전체가 화면에 들어오도록 <span class="font-bold text-gray-800 underline decoration-[#95D2B3] decoration-2 underline-offset-4">정면에서 촬영</span>해 주세요</p>
+            </li>
+            <li class="flex items-center gap-4">
+                <div class="bg-[#FFF9C4] p-2.5 rounded-xl text-[#FBC02D] shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.674a1 1 0 00.995-.85l.754-5.022a1 1 0 00-.995-1.148H8.913a1 1 0 00-.995 1.148l.754 5.022a1 1 0 00.995.85zM7 10h10M12 2v1m0 18v1m10-11h-1M2 12H1m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707"></path></svg>
+                </div>
+                <p class="text-[14px] text-gray-600">빛 반사나 그림자가 생기지 않는 <span class="font-bold text-gray-800 underline decoration-[#FFE082] decoration-2 underline-offset-4">밝은 환경</span>에서 촬영하면 좋아요</p>
+            </li>
+            <li class="flex items-center gap-4">
+                <div class="bg-[#E3F2FD] p-2.5 rounded-xl text-[#1976D2] shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <p class="text-[14px] text-gray-600">상품명과 가격이 선명하게 보이도록 <span class="font-bold text-gray-800 underline decoration-[#90CAF9] decoration-2 underline-offset-4">가까이서 찍어</span> 주세요</p>
+            </li>
+        </ul>
+    </div>
+</main>
+
+</body>
+</html>
