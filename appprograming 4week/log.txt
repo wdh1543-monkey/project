@@ -1,11 +1,11 @@
 ╭─── Claude Code v2.1.87 ──────────────────────────────────────────────────────╮
 │                                                    │ Tips for getting        │
-│                Welcome back 강민권!                │ started                 │
+│                Welcome back 원동현!                │ started                 │
 │                                                    │ Run /init to create a … │
 │                       ▐▛███▜▌                      │ Note: You have launche… │
 │                      ▝▜█████▛▘                     │ ─────────────────────── │
 │                        ▘▘ ▝▝                       │ Recent activity         │
-│  Sonnet 4.6 · Claude Pro · kang834130@gmail.com's  │ No recent activity      │
+│  Sonnet 4.6 · Claude Pro · wdh1543@g.shingu.ac.kr's  │ No recent activity      │
 │  Organization                                      │                         │
 │                   C:\Users\403-37                  │                         │
 ╰──────────────────────────────────────────────────────────────────────────────╯
