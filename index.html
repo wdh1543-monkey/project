@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Tasks</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- 헤더: 제목 + 다크모드 토글 -->
+    <div class="app-header">
+      <h1>My Tasks</h1>
+      <label class="theme-toggle" title="다크/라이트 모드 (Alt+D)">
+        <input type="checkbox" id="theme-checkbox" />
+        <span class="toggle-track">
+          <span class="toggle-thumb"></span>
+        </span>
+        <span class="toggle-label" id="theme-label">🌙</span>
+      </label>
+    </div>
+
+    <!-- 통계 대시보드 -->
+    <div class="dashboard">
+
+      <!-- 전체 진행률 + 오늘 추가 -->
+      <div class="dashboard-top">
+        <div class="overall-progress">
+          <span class="dash-label">전체 진행률</span>
+          <span class="overall-text" id="overall-text">0/0 완료 (0%)</span>
+          <div class="progress-bar">
+            <div class="progress-fill" id="overall-fill"></div>
+          </div>
+        </div>
+        <div class="today-count">
+          <span class="dash-label">오늘 추가</span>
+          <span class="today-num" id="today-num">0개</span>
+        </div>
+      </div>
+
+      <!-- 카테고리별 미니 진행률 (JS로 동적 렌더) -->
+      <div class="category-stats" id="category-stats"></div>
+    </div>
+
+    <!-- 필터 버튼 -->
+    <div class="filter-area">
+      <button class="filter-btn active" data-filter="all">전체</button>
+      <button class="filter-btn" data-filter="work">업무</button>
+      <button class="filter-btn" data-filter="personal">개인</button>
+      <button class="filter-btn" data-filter="study">공부</button>
+    </div>
+
+    <!-- 입력 영역 -->
+    <div class="input-area">
+      <select id="category-select">
+        <option value="work">💼 업무</option>
+        <option value="personal">🏠 개인</option>
+        <option value="study">📚 공부</option>
+      </select>
+      <input
+        type="text"
+        id="todo-input"
+        placeholder="할 일을 입력하세요..."
+        maxlength="100"
+        autocomplete="off"
+      />
+      <button id="add-btn">추가</button>
+    </div>
+
+    <!-- 할 일 목록 -->
+    <ul id="todo-list"></ul>
+
+    <!-- 푸터: 완료 항목 삭제 -->
+    <div class="list-footer">
+      <button id="clear-btn">완료된 항목 모두 삭제</button>
+      <span class="shortcut-hint">Alt+N 새 할일 &nbsp;|&nbsp; Alt+1~4 필터</span>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

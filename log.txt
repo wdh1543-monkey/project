@@ -1,0 +1,2294 @@
+╭─── Claude Code v2.1.87 ──────────────────────────────────────────────────────╮
+│                                                    │ Tips for getting        │
+│                Welcome back 강민권!                │ started                 │
+│                                                    │ Run /init to create a … │
+│                       ▐▛███▜▌                      │ Note: You have launche… │
+│                      ▝▜█████▛▘                     │ ─────────────────────── │
+│                        ▘▘ ▝▝                       │ Recent activity         │
+│  Sonnet 4.6 · Claude Pro · kang834130@gmail.com's  │ No recent activity      │
+│  Organization                                      │                         │
+│                   C:\Users\403-37                  │                         │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+> cd /c/VibeCoingB/Study-02                                                     
+
+● Bash(cd /c/VibeCoingB/Study-02 && pwd)
+  ⎿  Error: Exit code 1
+     /usr/bin/bash: line 1: cd: /c/VibeCoingB/Study-02: No such file or 
+     directory
+
+● The directory /c/VibeCoingB/Study-02 doesn't exist. Let me check what's
+  available:
+
+  Read 1 file (ctrl+o to expand)
+
+● It looks like the path has a typo — the directory is VibeCodingB (not
+  VibeCoingB). Let me check if Study-02 exists there:
+
+  Read 1 file (ctrl+o to expand)
+
+● Found it. The correct path is /c/VibeCodingB/Study-02. You can cd 
+  /c/VibeCodingB/Study-02 — note the typo: VibeCodingB, not VibeCoingB.
+
+> cd /c/VibeCodingB/Study-02                                                    
+
+● Bash(cd /c/VibeCodingB/Study-02 && pwd && ls)
+  ⎿  /c/VibeCodingB/Study-02
+     files.zip
+     index.html
+     … +3 lines (ctrl+o to expand)
+  ⎿  Shell cwd was reset to C:\Users\403-37
+
+● Now in /c/VibeCodingB/Study-02. Contents:
+
+  - index.html
+  - script.js
+  - style.css
+  - files.zip
+  - 화면 캡처 2026-03-30 112919.png
+
+  What would you like to do?
+
+> /init                                                                         
+
+  Read 3 files (ctrl+o to expand)
+
+● Write(/c/VibeCodingB/Study-02/CLAUDE.md)
+  ⎿  Wrote 42 lines to ..\..\c\VibeCodingB\Study-02\CLAUDE.md
+       1 # CLAUDE.md
+       2 
+       3 This file provides guidance to Claude Code (claude.ai/code) when
+          working with code in this repository.
+       4 
+       5 ## Running the App
+       6 
+       7 No build step required. Open `index.html` directly in a browser,
+          or serve it with any static file server:
+       8 
+       9 ```bash
+      10 npx serve .
+     … +32 lines (ctrl+o to expand)
+
+● Created CLAUDE.md covering how to run the app and the key architectural
+  patterns — state mutation flow, render strategy, undo buffer, inline edit
+  mechanism, and persistence.
+
+>  Step 1: 기본 구조 및 핵심 기능 구현                                          
+할 일관리앱의기본구조를 만들어줘.                                               
+요구사항:                                                                       
+1. index.html, style.css, script.js 세 개의 파일로 구성                         
+2. HTML 구조: 제목 "My Tasks", 할 일 입력창과 추가 버튼,                        
+할 일목록표시할 컨테이너                                                        
+3. JavaScript 기능: 할 일 추가, 삭제, 체크박스로 완료 표시,                     
+localStorage에 데이터 저장                                                      
+
+● 현재 파일들을 기본 구조로 교체하겠습니다. Step 1이므로 요구사항에 맞게
+  깔끔하고 단순하게 작성합니다.
+
+● Write(/c/VibeCodingB/Study-02/index.html)
+  ⎿  Wrote 30 lines to ..\..\c\VibeCodingB\Study-02\index.html
+      1 <!DOCTYPE html>
+      2 <html lang="ko">
+      3 <head>
+      4   <meta charset="UTF-8" />
+      5   <meta name="viewport" content="width=device-width, initial-scal
+        e=1.0" />
+      6   <title>My Tasks</title>
+      7   <link rel="stylesheet" href="style.css" />
+      8 </head>
+      9 <body>
+     … +20 lines (ctrl+o to expand)
+
+● Write(/c/VibeCodingB/Study-02/style.css)
+  ⎿  Wrote 114 lines to ..\..\c\VibeCodingB\Study-02\style.css
+       1 * {
+       2   box-sizing: border-box;
+       3   margin: 0;
+       4   padding: 0;
+       5 }
+       6 
+       7 body {
+       8   font-family: sans-serif;
+       9   background: #f0f2f5;
+      10   display: flex;
+     … +104 lines (ctrl+o to expand)
+
+● Write(/c/VibeCodingB/Study-02/script.js)
+  ⎿  Wrote 95 lines to ..\..\c\VibeCodingB\Study-02\script.js
+      1 const STORAGE_KEY = 'my_tasks';
+      2 
+      3 // 앱 상태
+      4 let todos = loadTodos();
+      5 
+      6 // DOM
+      7 const todoInput = document.getElementById('todo-input');
+      8 const addBtn    = document.getElementById('add-btn');
+      9 const todoList  = document.getElementById('todo-list');
+     … +85 lines (ctrl+o to expand)
+
+● Step 1 완료. 구현된 내용:
+
+  index.html
+  - 제목 "My Tasks", 입력창 + 추가 버튼, <ul id="todo-list"> 컨테이너
+
+  style.css
+  - 카드 레이아웃, 입력창 포커스 효과, 완료 항목 취소선, 삭제 버튼 스타일
+
+  script.js
+  - addTodo() — 입력값으로 항목 생성, Enter 키도 지원
+  - toggleTodo(id) — 체크박스로 완료/미완료 전환
+  - deleteTodo(id) — 항목 삭제
+  - loadTodos() / saveTodos() — localStorage 영속성 (my_tasks 키)
+  - render() — 상태 변경 시마다 목록 전체 재렌더
+
+✻ Crunched for 34s
+
+> Step 2: 카테고리 기능 및 UI 개선                                              
+기존 코드에 카테고리 기능을 추가하고 UI를 개선해줘.                             
+요구사항:                                                                       
+1. 카테고리 기능: 업무(work), 개인(personal), 공부(study)                       
+2. 카테고리별 색상 태그, 필터 버튼                                              
+3. 데이터 구조에 category 필드 추가                                             
+
+● 기존 코드를 기반으로 카테고리 기능을 추가하겠습니다.
+
+  Read 1 file (ctrl+o to expand)
+
+● Write(/c/VibeCodingB/Study-02/index.html)
+  ⎿  Added 14 lines
+      11    <div class="container">
+      12      <h1>My Tasks</h1>
+      13  
+      14 +    <!-- 입력 영역 -->                                         
+      15      <div class="input-area">
+      16        <input
+      17          type="text"
+     ...
+      20          maxlength="100"
+      21          autocomplete="off"
+      22        />
+      23 +      <select id="category-select">                            
+      24 +        <option value="work">💼 업무</option>                  
+      25 +        <option value="personal">🏠 개인</option>              
+      26 +        <option value="study">📚 공부</option>                 
+      27 +      </select>                                                
+      28        <button id="add-btn">추가</button>
+      29      </div>
+      30  
+      31 +    <!-- 필터 버튼 -->                                         
+      32 +    <div class="filter-area">                                  
+      33 +      <button class="filter-btn active" data-filter="all">전체<
+         +/button>                                                       
+      34 +      <button class="filter-btn" data-filter="work">💼 업무</bu
+         +tton>                                                          
+      35 +      <button class="filter-btn" data-filter="personal">🏠 개인
+         +</button>                                                      
+      36 +      <button class="filter-btn" data-filter="study">📚 공부</b
+         +utton>                                                         
+      37 +    </div>                                                     
+      38 +                                                               
+      39      <ul id="todo-list"></ul>
+      40    </div>
+      41  
+
+● Write(/c/VibeCodingB/Study-02/style.css)  ⎿  Added 91 lines, removed 8 lines
+      18    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      19    padding: 32px;
+      20    width: 100%;
+      21 -  max-width: 480px;                                            
+      21 +  max-width: 520px;                                            
+      22  }
+      23  
+      24  h1 {
+     ...
+      27    color: #1a1a2e;
+      28  }
+      29  
+      30 -/* 입력 영역 */                                                
+      30 +/* ── 입력 영역 ─────────────────────────────────────── */     
+      31  .input-area {
+      32    display: flex;
+      33    gap: 8px;
+      34 -  margin-bottom: 24px;                                         
+      34 +  margin-bottom: 16px;                                         
+      35  }
+      36  
+      37  #todo-input {
+     ...
+      48    border-color: #4f46e5;
+      49  }
+      50  
+      51 +#category-select {                                             
+      52 +  padding: 10px 10px;                                          
+      53 +  border: 1.5px solid #ddd;                                    
+      54 +  border-radius: 8px;                                          
+      55 +  font-size: 14px;                                             
+      56 +  color: #333;                                                 
+      57 +  background: #fff;                                            
+      58 +  cursor: pointer;                                             
+      59 +  outline: none;                                               
+      60 +  transition: border-color 0.2s;                               
+      61 +}                                                              
+      62 +                                                               
+      63 +#category-select:focus {                                       
+      64 +  border-color: #4f46e5;                                       
+      65 +}                                                              
+      66 +                                                               
+      67  #add-btn {
+      68    padding: 10px 18px;
+      69    background: #4f46e5;
+     ...
+       73    font-size: 15px;
+       74    cursor: pointer;
+       75    transition: background 0.2s;
+       76 +  white-space: nowrap;                                        
+       77  }
+       78  
+       79  #add-btn:hover {
+       80    background: #4338ca;
+       81  }
+       82  
+       66 -/* 목록 */                                                    
+       83 +/* ── 필터 버튼 ─────────────────────────────────────── */    
+       84 +.filter-area {                                                
+       85 +  display: flex;                                              
+       86 +  gap: 8px;                                                   
+       87 +  margin-bottom: 20px;                                        
+       88 +  flex-wrap: wrap;                                            
+       89 +}                                                             
+       90 +                                                              
+       91 +.filter-btn {                                                 
+       92 +  padding: 6px 14px;                                          
+       93 +  border: 1.5px solid #ddd;                                   
+       94 +  border-radius: 20px;                                        
+       95 +  background: #fff;                                           
+       96 +  color: #666;                                                
+       97 +  font-size: 13px;                                            
+       98 +  cursor: pointer;                                            
+       99 +  transition: all 0.2s;                                       
+      100 +}                                                             
+      101 +                                                              
+      102 +.filter-btn:hover {                                           
+      103 +  border-color: #4f46e5;                                      
+      104 +  color: #4f46e5;                                             
+      105 +}                                                             
+      106 +                                                              
+      107 +.filter-btn.active {                                          
+      108 +  background: #4f46e5;                                        
+      109 +  border-color: #4f46e5;                                      
+      110 +  color: #fff;                                                
+      111 +}                                                             
+      112 +                                                              
+      113 +/* ── 할 일 목록 ────────────────────────────────────── */    
+      114  #todo-list {
+      115    list-style: none;
+      116  }
+     ...
+      132    height: 18px;
+      133    cursor: pointer;
+      134    accent-color: #4f46e5;
+      135 +  flex-shrink: 0;                                             
+      136  }
+      137  
+       90 -.todo-item span {                                             
+      138 +.todo-item span.todo-text {                                   
+      139    flex: 1;
+      140    font-size: 15px;
+      141    color: #333;
+      142  }
+      143  
+       96 -.todo-item.completed span {                                   
+      144 +.todo-item.completed span.todo-text {                         
+      145    text-decoration: line-through;
+      146    color: #aaa;
+      147  }
+      148  
+      101 -.todo-item button {                                           
+      149 +/* ── 카테고리 태그 ──────────────────────────────────── */   
+      150 +.category-tag {                                               
+      151 +  font-size: 11px;                                            
+      152 +  font-weight: 600;                                           
+      153 +  padding: 3px 9px;                                           
+      154 +  border-radius: 20px;                                        
+      155 +  white-space: nowrap;                                        
+      156 +  flex-shrink: 0;                                             
+      157 +}                                                             
+      158 +                                                              
+      159 +.tag-work {                                                   
+      160 +  background: #dbeafe;                                        
+      161 +  color: #1d4ed8;                                             
+      162 +}                                                             
+      163 +                                                              
+      164 +.tag-personal {                                               
+      165 +  background: #dcfce7;                                        
+      166 +  color: #15803d;                                             
+      167 +}                                                             
+      168 +                                                              
+      169 +.tag-study {                                                  
+      170 +  background: #fef3c7;                                        
+      171 +  color: #b45309;                                             
+      172 +}                                                             
+      173 +                                                              
+      174 +/* ── 삭제 버튼 ─────────────────────────────────────── */    
+      175 +.todo-item button.del-btn {                                   
+      176    padding: 4px 10px;
+      177    background: #fee2e2;
+      178    color: #dc2626;
+     ...
+      181    font-size: 13px;
+      182    cursor: pointer;
+      183    transition: background 0.2s;
+      184 +  flex-shrink: 0;                                             
+      185  }
+      186  
+      112 -.todo-item button:hover {                                     
+      187 +.todo-item button.del-btn:hover {                             
+      188    background: #fecaca;
+      189  }
+      190 +                                                              
+      191 +/* ── 빈 상태 ───────────────────────────────────────── */    
+      192 +.empty-msg {                                                  
+      193 +  text-align: center;                                         
+      194 +  color: #aaa;                                                
+      195 +  font-size: 14px;                                            
+      196 +  padding: 40px 0;                                            
+      197 +}                                                             
+
+● Write(/c/VibeCodingB/Study-02/script.js)
+  ⎿  Added 56 lines, removed 10 lines
+       1  const STORAGE_KEY = 'my_tasks';
+       2  
+       3 -// 앱 상태                                                     
+       4 -let todos = loadTodos();                                       
+       3 +// 카테고리 메타데이터                                         
+       4 +const CATEGORIES = {                                           
+       5 +  work:     { label: '💼 업무', tagClass: 'tag-work' },        
+       6 +  personal: { label: '🏠 개인', tagClass: 'tag-personal' },    
+       7 +  study:    { label: '📚 공부', tagClass: 'tag-study' },       
+       8 +};                                                             
+       9  
+       6 -// DOM                                                         
+       7 -const todoInput = document.getElementById('todo-input');       
+       8 -const addBtn    = document.getElementById('add-btn');          
+       9 -const todoList  = document.getElementById('todo-list');        
+      10 +// ── 앱 상태 ────────────────────────────────────────────     
+      11 +let todos       = loadTodos();                                 
+      12 +let activeFilter = 'all';  // 'all' | 'work' | 'personal' | 'st
+         +udy'                                                           
+      13  
+      14 +// ── DOM ────────────────────────────────────────────────     
+      15 +const todoInput      = document.getElementById('todo-input');  
+      16 +const categorySelect = document.getElementById('category-select
+         +');                                                            
+      17 +const addBtn         = document.getElementById('add-btn');     
+      18 +const todoList       = document.getElementById('todo-list');   
+      19 +const filterBtns     = document.querySelectorAll('.filter-btn')
+         +;                                                              
+      20 +                                                               
+      21  // ── localStorage ───────────────────────────────────────
+      22  function loadTodos() {
+      23    try {
+     ...
+      33  }
+      34  
+      35  // ── 데이터 ─────────────────────────────────────────────
+      26 -function createTodo(text) {                                    
+      36 +function createTodo(text, category) {                          
+      37    return {
+      38      id: Date.now().toString(),
+      39      text: text.trim(),
+      40      completed: false,
+      41 +    category,           // 'work' | 'personal' | 'study'       
+      42    };
+      43  }
+      44  
+     ...
+      46  function render() {
+      47    todoList.innerHTML = '';
+      48  
+      38 -  todos.forEach(todo => {                                      
+      49 +  // 현재 필터에 맞는 항목만 추출                              
+      50 +  const filtered = activeFilter === 'all'                      
+      51 +    ? todos                                                    
+      52 +    : todos.filter(t => t.category === activeFilter);          
+      53 +                                                               
+      54 +  if (filtered.length === 0) {                                 
+      55      const li = document.createElement('li');
+      56 +    li.className = 'empty-msg';                                
+      57 +    li.textContent = '할 일이 없습니다.';                      
+      58 +    todoList.appendChild(li);                                  
+      59 +    return;                                                    
+      60 +  }                                                            
+      61 +                                                               
+      62 +  filtered.forEach(todo => {                                   
+      63 +    const li = document.createElement('li');                   
+      64      li.className = 'todo-item' + (todo.completed ? ' completed'
+           : '');
+      65  
+      66      // 체크박스
+     ...
+      71  
+      72      // 텍스트
+      73      const span = document.createElement('span');
+      74 +    span.className = 'todo-text';                              
+      75      span.textContent = todo.text;
+      76  
+      77 +    // 카테고리 태그                                           
+      78 +    const tag = document.createElement('span');                
+      79 +    const cat = CATEGORIES[todo.category];                     
+      80 +    tag.className = 'category-tag ' + cat.tagClass;            
+      81 +    tag.textContent = cat.label;                               
+      82 +                                                               
+      83      // 삭제 버튼
+      84      const delBtn = document.createElement('button');
+      85 +    delBtn.className = 'del-btn';                              
+      86      delBtn.textContent = '삭제';
+      87      delBtn.addEventListener('click', () => deleteTodo(todo.id))
+          ;
+      88  
+      57 -    li.append(cb, span, delBtn);                               
+      89 +    li.append(cb, span, tag, delBtn);                          
+      90      todoList.appendChild(li);
+      91    });
+      92  }
+     ...
+       96    const text = todoInput.value.trim();
+       97    if (!text) return;
+       98  
+       67 -  todos.push(createTodo(text));                               
+       99 +  const category = categorySelect.value;                      
+      100 +  todos.push(createTodo(text, category));                     
+      101    saveTodos();
+      102    todoInput.value = '';
+      103    todoInput.focus();
+     ...
+      118    render();
+      119  }
+      120  
+      121 +// ── 필터 ───────────────────────────────────────────────    
+      122 +filterBtns.forEach(btn => {                                   
+      123 +  btn.addEventListener('click', () => {                       
+      124 +    activeFilter = btn.dataset.filter;                        
+      125 +                                                              
+      126 +    // 활성 버튼 표시                                         
+      127 +    filterBtns.forEach(b => b.classList.remove('active'));    
+      128 +    btn.classList.add('active');                              
+      129 +                                                              
+      130 +    render();                                                 
+      131 +  });                                                         
+      132 +});                                                           
+      133 +                                                              
+      134  // ── 이벤트 ─────────────────────────────────────────────
+      135  addBtn.addEventListener('click', addTodo);
+      136  todoInput.addEventListener('keydown', e => {
+
+● Step 2 완료. 추가된 내용:
+
+  카테고리 기능
+  - CATEGORIES 객체로 work / personal / study 메타데이터(라벨, 태그 클래스) 중앙
+   관리
+  - createTodo()에 category 필드 추가 → localStorage에도 함께 저장
+
+  UI 변경사항
+
+  ┌─────────────┬──────────────────────────────────────────────┐
+  │    위치     │                  변경 내용                   │
+  ├─────────────┼──────────────────────────────────────────────┤
+  │ 입력창 옆   │ <select> 드롭다운으로 카테고리 선택          │
+  ├─────────────┼──────────────────────────────────────────────┤
+  │ 입력창 아래 │ 전체 / 💼 업무 / 🏠 개인 / 📚 공부 필터 버튼 │
+  ├─────────────┼──────────────────────────────────────────────┤
+  │ 각 항목     │ 카테고리 색상 태그 (파랑/초록/노랑)          │
+  └─────────────┴──────────────────────────────────────────────┘
+
+  필터 로직
+  - activeFilter 상태로 현재 필터를 관리
+  - 'all'이면 전체, 아니면 todo.category === activeFilter로 필터링 후 렌더
+
+✻ Churned for 49s
+
+> [Image #2] 해당 이미지와 같이 ui 변경 및 전체 진행률 표시 ("5/10 완료 (50%)"  
+형식 + 프로그레스 바)                                                           
+카테고리별 미니 진행률, 오늘 추가된 할 일 개수                                  
+인라인 수정 기능 (더블클릭으로 편집 모드) 추가해줘                              
+  ⎿  [Image #2]
+
+● 이미지를 확인하고 전체 구조를 파악했습니다. 세 파일 모두 재작성합니다.
+
+● Write(/c/VibeCodingB/Study-02/index.html)
+  ⎿  Added 58 lines, removed 13 lines
+      11    <div class="container">
+      12      <h1>My Tasks</h1>
+      13  
+      14 +    <!-- 통계 대시보드 -->                                     
+      15 +    <div class="dashboard">                                    
+      16 +                                                               
+      17 +      <!-- 전체 진행률 + 오늘 추가 -->                         
+      18 +      <div class="dashboard-top">                              
+      19 +        <div class="overall-progress">                         
+      20 +          <span class="dash-label">전체 진행률</span>          
+      21 +          <span class="overall-text" id="overall-text">0/0 완료
+         + (0%)</span>                                                   
+      22 +          <div class="progress-bar">                           
+      23 +            <div class="progress-fill" id="overall-fill"></div>
+      24 +          </div>                                               
+      25 +        </div>                                                 
+      26 +        <div class="today-count">                              
+      27 +          <span class="dash-label">오늘 추가</span>            
+      28 +          <span class="today-num" id="today-num">0개</span>    
+      29 +        </div>                                                 
+      30 +      </div>                                                   
+      31 +                                                               
+      32 +      <!-- 카테고리별 미니 진행률 -->                          
+      33 +      <div class="category-stats">                             
+      34 +        <div class="cat-stat" id="stat-work">                  
+      35 +          <span class="cat-stat-label">💼 업무</span>          
+      36 +          <span class="cat-stat-count" id="count-work">0/0</spa
+         +n>                                                             
+      37 +          <div class="mini-bar">                               
+      38 +            <div class="mini-fill fill-work" id="fill-work"></d
+         +iv>                                                            
+      39 +          </div>                                               
+      40 +        </div>                                                 
+      41 +        <div class="cat-stat" id="stat-personal">              
+      42 +          <span class="cat-stat-label">🏠 개인</span>          
+      43 +          <span class="cat-stat-count" id="count-personal">0/0<
+         +/span>                                                         
+      44 +          <div class="mini-bar">                               
+      45 +            <div class="mini-fill fill-personal" id="fill-perso
+         +nal"></div>                                                    
+      46 +          </div>                                               
+      47 +        </div>                                                 
+      48 +        <div class="cat-stat" id="stat-study">                 
+      49 +          <span class="cat-stat-label">📚 공부</span>          
+      50 +          <span class="cat-stat-count" id="count-study">0/0</sp
+         +an>                                                            
+      51 +          <div class="mini-bar">                               
+      52 +            <div class="mini-fill fill-study" id="fill-study"><
+         +/div>                                                          
+      53 +          </div>                                               
+      54 +        </div>                                                 
+      55 +      </div>                                                   
+      56 +    </div>                                                     
+      57 +                                                               
+      58 +    <!-- 필터 버튼 -->                                         
+      59 +    <div class="filter-area">                                  
+      60 +      <button class="filter-btn active" data-filter="all">전체<
+         +/button>                                                       
+      61 +      <button class="filter-btn" data-filter="work">업무</butto
+         +n>                                                             
+      62 +      <button class="filter-btn" data-filter="personal">개인</b
+         +utton>                                                         
+      63 +      <button class="filter-btn" data-filter="study">공부</butt
+         +on>                                                            
+      64 +    </div>                                                     
+      65 +                                                               
+      66      <!-- 입력 영역 -->
+      67      <div class="input-area">
+      68 +      <select id="category-select">                            
+      69 +        <option value="work">💼 업무</option>                  
+      70 +        <option value="personal">🏠 개인</option>              
+      71 +        <option value="study">📚 공부</option>                 
+      72 +      </select>                                                
+      73        <input
+      74          type="text"
+      75          id="todo-input"
+     ...
+      77          maxlength="100"
+      78          autocomplete="off"
+      79        />
+      23 -      <select id="category-select">                            
+      24 -        <option value="work">💼 업무</option>                  
+      25 -        <option value="personal">🏠 개인</option>              
+      26 -        <option value="study">📚 공부</option>                 
+      27 -      </select>                                                
+      80        <button id="add-btn">추가</button>
+      81      </div>
+      82  
+      31 -    <!-- 필터 버튼 -->                                         
+      32 -    <div class="filter-area">                                  
+      33 -      <button class="filter-btn active" data-filter="all">전체<
+         -/button>                                                       
+      34 -      <button class="filter-btn" data-filter="work">💼 업무</bu
+         -tton>                                                          
+      35 -      <button class="filter-btn" data-filter="personal">🏠 개인
+         -</button>                                                      
+      36 -      <button class="filter-btn" data-filter="study">📚 공부</b
+         -utton>                                                         
+      37 -    </div>                                                     
+      38 -                                                               
+      83 +    <!-- 할 일 목록 -->                                        
+      84      <ul id="todo-list"></ul>
+      85    </div>
+      86  
+
+● Write(/c/VibeCodingB/Study-02/style.css)
+  ⎿  Added 218 lines, removed 82 lines
+        5  }
+        6  
+        7  body {
+        8 -  font-family: sans-serif;                                    
+        9 -  background: #f0f2f5;                                        
+        8 +  font-family: 'Segoe UI', sans-serif;                        
+        9 +  min-height: 100vh;                                          
+       10 +  background: linear-gradient(135deg, #3b4fd8 0%, #6366f1 50%,
+          + #818cf8 100%);                                               
+       11    display: flex;
+       12    justify-content: center;
+       12 -  padding: 60px 16px;                                         
+       13 +  align-items: flex-start;                                    
+       14 +  padding: 48px 16px 80px;                                    
+       15  }
+       16  
+       17 +/* ── 카드 ───────────────────────────────────────────── */   
+       18  .container {
+       19    background: #fff;
+       17 -  border-radius: 12px;                                        
+       18 -  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);                  
+       19 -  padding: 32px;                                              
+       20 +  border-radius: 20px;                                        
+       21 +  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);                 
+       22 +  padding: 36px 32px 32px;                                    
+       23    width: 100%;
+       21 -  max-width: 520px;                                           
+       24 +  max-width: 560px;                                           
+       25  }
+       26  
+       27  h1 {
+       25 -  font-size: 28px;                                            
+       28 +  font-size: 30px;                                            
+       29 +  font-weight: 700;                                           
+       30 +  color: #1e1b4b;                                             
+       31 +  text-align: center;                                         
+       32    margin-bottom: 24px;
+       27 -  color: #1a1a2e;                                             
+       33  }
+       34  
+       30 -/* ── 입력 영역 ─────────────────────────────────────── */    
+       31 -.input-area {                                                 
+       35 +/* ── 대시보드 ────────────────────────────────────────── */  
+       36 +.dashboard {                                                  
+       37 +  border: 1.5px solid #e0e7ff;                                
+       38 +  border-radius: 14px;                                        
+       39 +  padding: 18px 20px;                                         
+       40 +  margin-bottom: 20px;                                        
+       41 +  background: #f8f9ff;                                        
+       42 +}                                                             
+       43 +                                                              
+       44 +/* 전체 진행률 + 오늘 추가 */                                 
+       45 +.dashboard-top {                                              
+       46    display: flex;
+       33 -  gap: 8px;                                                   
+       47 +  align-items: flex-start;                                    
+       48 +  gap: 16px;                                                  
+       49    margin-bottom: 16px;
+       50  }
+       51  
+       37 -#todo-input {                                                 
+       52 +.overall-progress {                                           
+       53    flex: 1;
+       39 -  padding: 10px 14px;                                         
+       40 -  border: 1.5px solid #ddd;                                   
+       41 -  border-radius: 8px;                                         
+       42 -  font-size: 15px;                                            
+       43 -  outline: none;                                              
+       44 -  transition: border-color 0.2s;                              
+       54 +  display: flex;                                              
+       55 +  flex-direction: column;                                     
+       56 +  gap: 5px;                                                   
+       57  }
+       58  
+       47 -#todo-input:focus {                                           
+       48 -  border-color: #4f46e5;                                      
+       59 +.dash-label {                                                 
+       60 +  font-size: 11px;                                            
+       61 +  font-weight: 600;                                           
+       62 +  color: #6b7280;                                             
+       63 +  text-transform: uppercase;                                  
+       64 +  letter-spacing: 0.05em;                                     
+       65  }
+       66  
+       51 -#category-select {                                            
+       52 -  padding: 10px 10px;                                         
+       53 -  border: 1.5px solid #ddd;                                   
+       54 -  border-radius: 8px;                                         
+       55 -  font-size: 14px;                                            
+       56 -  color: #333;                                                
+       67 +.overall-text {                                               
+       68 +  font-size: 16px;                                            
+       69 +  font-weight: 700;                                           
+       70 +  color: #1e1b4b;                                             
+       71 +}                                                             
+       72 +                                                              
+       73 +.progress-bar {                                               
+       74 +  height: 8px;                                                
+       75 +  background: #e0e7ff;                                        
+       76 +  border-radius: 99px;                                        
+       77 +  overflow: hidden;                                           
+       78 +}                                                             
+       79 +                                                              
+       80 +.progress-fill {                                              
+       81 +  height: 100%;                                               
+       82 +  width: 0%;                                                  
+       83 +  background: linear-gradient(90deg, #6366f1, #4f46e5);       
+       84 +  border-radius: 99px;                                        
+       85 +  transition: width 0.4s ease;                                
+       86 +}                                                             
+       87 +                                                              
+       88 +/* 오늘 추가 */                                               
+       89 +.today-count {                                                
+       90 +  display: flex;                                              
+       91 +  flex-direction: column;                                     
+       92 +  align-items: flex-end;                                      
+       93 +  gap: 4px;                                                   
+       94 +}                                                             
+       95 +                                                              
+       96 +.today-num {                                                  
+       97 +  font-size: 26px;                                            
+       98 +  font-weight: 800;                                           
+       99 +  color: #4f46e5;                                             
+      100 +  line-height: 1;                                             
+      101 +}                                                             
+      102 +                                                              
+      103 +/* ── 카테고리별 미니 진행률 ─────────────────────────── */   
+      104 +.category-stats {                                             
+      105 +  display: flex;                                              
+      106 +  gap: 12px;                                                  
+      107 +}                                                             
+      108 +                                                              
+      109 +.cat-stat {                                                   
+      110 +  flex: 1;                                                    
+      111    background: #fff;
+       58 -  cursor: pointer;                                            
+       59 -  outline: none;                                              
+       60 -  transition: border-color 0.2s;                              
+      112 +  border: 1px solid #e0e7ff;                                  
+      113 +  border-radius: 10px;                                        
+      114 +  padding: 10px 12px;                                         
+      115 +  display: flex;                                              
+      116 +  flex-direction: column;                                     
+      117 +  gap: 5px;                                                   
+      118  }
+      119  
+       63 -#category-select:focus {                                      
+       64 -  border-color: #4f46e5;                                      
+      120 +.cat-stat-label {                                             
+      121 +  font-size: 12px;                                            
+      122 +  font-weight: 600;                                           
+      123 +  color: #374151;                                             
+      124  }
+      125  
+       67 -#add-btn {                                                    
+       68 -  padding: 10px 18px;                                         
+       69 -  background: #4f46e5;                                        
+       70 -  color: #fff;                                                
+       71 -  border: none;                                               
+       72 -  border-radius: 8px;                                         
+       73 -  font-size: 15px;                                            
+       74 -  cursor: pointer;                                            
+       75 -  transition: background 0.2s;                                
+       76 -  white-space: nowrap;                                        
+      126 +.cat-stat-count {                                             
+      127 +  font-size: 13px;                                            
+      128 +  font-weight: 700;                                           
+      129 +  color: #1e1b4b;                                             
+      130  }
+      131  
+       79 -#add-btn:hover {                                              
+       80 -  background: #4338ca;                                        
+      132 +.mini-bar {                                                   
+      133 +  height: 5px;                                                
+      134 +  background: #e5e7eb;                                        
+      135 +  border-radius: 99px;                                        
+      136 +  overflow: hidden;                                           
+      137  }
+      138  
+       83 -/* ── 필터 버튼 ─────────────────────────────────────── */    
+      139 +.mini-fill {                                                  
+      140 +  height: 100%;                                               
+      141 +  width: 0%;                                                  
+      142 +  border-radius: 99px;                                        
+      143 +  transition: width 0.4s ease;                                
+      144 +}                                                             
+      145 +                                                              
+      146 +.fill-work     { background: #3b82f6; }                       
+      147 +.fill-personal { background: #22c55e; }                       
+      148 +.fill-study    { background: #f59e0b; }                       
+      149 +                                                              
+      150 +/* ── 필터 버튼 ──────────────────────────────────────── */   
+      151  .filter-area {
+      152    display: flex;
+      153    gap: 8px;
+       87 -  margin-bottom: 20px;                                        
+       88 -  flex-wrap: wrap;                                            
+      154 +  margin-bottom: 16px;                                        
+      155  }
+      156  
+      157  .filter-btn {
+       92 -  padding: 6px 14px;                                          
+       93 -  border: 1.5px solid #ddd;                                   
+       94 -  border-radius: 20px;                                        
+      158 +  flex: 1;                                                    
+      159 +  padding: 8px 0;                                             
+      160 +  border: 1.5px solid #e0e7ff;                                
+      161 +  border-radius: 8px;                                         
+      162    background: #fff;
+       96 -  color: #666;                                                
+      163 +  color: #6b7280;                                             
+      164    font-size: 13px;
+      165 +  font-weight: 500;                                           
+      166    cursor: pointer;
+       99 -  transition: all 0.2s;                                       
+      167 +  transition: all 0.18s;                                      
+      168  }
+      169  
+      170  .filter-btn:hover {
+      103 -  border-color: #4f46e5;                                      
+      171 +  border-color: #6366f1;                                      
+      172    color: #4f46e5;
+      173  }
+      174  
+     ...
+      178    color: #fff;
+      179  }
+      180  
+      113 -/* ── 할 일 목록 ────────────────────────────────────── */    
+      181 +/* ── 입력 영역 ──────────────────────────────────────── */   
+      182 +.input-area {                                                 
+      183 +  display: flex;                                              
+      184 +  gap: 8px;                                                   
+      185 +  margin-bottom: 20px;                                        
+      186 +}                                                             
+      187 +                                                              
+      188 +#category-select {                                            
+      189 +  padding: 10px 10px;                                         
+      190 +  border: 1.5px solid #e0e7ff;                                
+      191 +  border-radius: 8px;                                         
+      192 +  font-size: 14px;                                            
+      193 +  color: #374151;                                             
+      194 +  background: #fff;                                           
+      195 +  cursor: pointer;                                            
+      196 +  outline: none;                                              
+      197 +  transition: border-color 0.2s;                              
+      198 +}                                                             
+      199 +                                                              
+      200 +#category-select:focus {                                      
+      201 +  border-color: #6366f1;                                      
+      202 +}                                                             
+      203 +                                                              
+      204 +#todo-input {                                                 
+      205 +  flex: 1;                                                    
+      206 +  padding: 10px 14px;                                         
+      207 +  border: 1.5px solid #e0e7ff;                                
+      208 +  border-radius: 8px;                                         
+      209 +  font-size: 14px;                                            
+      210 +  outline: none;                                              
+      211 +  transition: border-color 0.2s;                              
+      212 +  color: #1e1b4b;                                             
+      213 +}                                                             
+      214 +                                                              
+      215 +#todo-input:focus {                                           
+      216 +  border-color: #6366f1;                                      
+      217 +}                                                             
+      218 +                                                              
+      219 +#add-btn {                                                    
+      220 +  padding: 10px 20px;                                         
+      221 +  background: #4f46e5;                                        
+      222 +  color: #fff;                                                
+      223 +  border: none;                                               
+      224 +  border-radius: 8px;                                         
+      225 +  font-size: 14px;                                            
+      226 +  font-weight: 600;                                           
+      227 +  cursor: pointer;                                            
+      228 +  transition: background 0.2s;                                
+      229 +  white-space: nowrap;                                        
+      230 +}                                                             
+      231 +                                                              
+      232 +#add-btn:hover {                                              
+      233 +  background: #4338ca;                                        
+      234 +}                                                             
+      235 +                                                              
+      236 +/* ── 할 일 목록 ─────────────────────────────────────── */   
+      237  #todo-list {
+      238    list-style: none;
+      239  }
+     ...
+      242    display: flex;
+      243    align-items: center;
+      244    gap: 12px;
+      122 -  padding: 12px 8px;                                          
+      123 -  border-bottom: 1px solid #f0f0f0;                           
+      245 +  padding: 12px 6px;                                          
+      246 +  border-bottom: 1px solid #f3f4f6;                           
+      247  }
+      248  
+      249  .todo-item:last-child {
+     ...
+      258    flex-shrink: 0;
+      259  }
+      260  
+      138 -.todo-item span.todo-text {                                   
+      261 +.todo-text {                                                  
+      262    flex: 1;
+      263    font-size: 15px;
+      141 -  color: #333;                                                
+      264 +  color: #1f2937;                                             
+      265 +  cursor: text;                                               
+      266 +  word-break: break-word;                                     
+      267 +  line-height: 1.4;                                           
+      268  }
+      269  
+      144 -.todo-item.completed span.todo-text {                         
+      270 +.todo-item.completed .todo-text {                             
+      271    text-decoration: line-through;
+      146 -  color: #aaa;                                                
+      272 +  color: #9ca3af;                                             
+      273  }
+      274  
+      275 +/* 인라인 수정 input */                                       
+      276 +.edit-input {                                                 
+      277 +  flex: 1;                                                    
+      278 +  font-size: 15px;                                            
+      279 +  color: #1f2937;                                             
+      280 +  border: none;                                               
+      281 +  border-bottom: 2px solid #4f46e5;                           
+      282 +  outline: none;                                              
+      283 +  background: transparent;                                    
+      284 +  padding: 2px 0;                                             
+      285 +}                                                             
+      286 +                                                              
+      287  /* ── 카테고리 태그 ──────────────────────────────────── */
+      288  .category-tag {
+      289    font-size: 11px;
+     ...
+      294    flex-shrink: 0;
+      295  }
+      296  
+      159 -.tag-work {                                                   
+      160 -  background: #dbeafe;                                        
+      161 -  color: #1d4ed8;                                             
+      162 -}                                                             
+      297 +.tag-work     { background: #dbeafe; color: #1d4ed8; }        
+      298 +.tag-personal { background: #dcfce7; color: #15803d; }        
+      299 +.tag-study    { background: #fef3c7; color: #b45309; }        
+      300  
+      164 -.tag-personal {                                               
+      165 -  background: #dcfce7;                                        
+      166 -  color: #15803d;                                             
+      167 -}                                                             
+      168 -                                                              
+      169 -.tag-study {                                                  
+      170 -  background: #fef3c7;                                        
+      171 -  color: #b45309;                                             
+      172 -}                                                             
+      173 -                                                              
+      174 -/* ── 삭제 버튼 ─────────────────────────────────────── */    
+      175 -.todo-item button.del-btn {                                   
+      301 +/* ── 삭제 버튼 ──────────────────────────────────────── */   
+      302 +.del-btn {                                                    
+      303    padding: 4px 10px;
+      304    background: #fee2e2;
+      305    color: #dc2626;
+      306    border: none;
+      307    border-radius: 6px;
+      181 -  font-size: 13px;                                            
+      308 +  font-size: 12px;                                            
+      309    cursor: pointer;
+      183 -  transition: background 0.2s;                                
+      310    flex-shrink: 0;
+      311 +  transition: background 0.2s;                                
+      312  }
+      313  
+      187 -.todo-item button.del-btn:hover {                             
+      314 +.del-btn:hover {                                              
+      315    background: #fecaca;
+      316  }
+      317  
+      191 -/* ── 빈 상태 ───────────────────────────────────────── */    
+      318 +/* ── 빈 상태 ────────────────────────────────────────── */   
+      319  .empty-msg {
+      320    text-align: center;
+      194 -  color: #aaa;                                                
+      321 +  color: #9ca3af;                                             
+      322    font-size: 14px;
+      196 -  padding: 40px 0;                                            
+      323 +  padding: 36px 0;                                            
+      324  }
+      325 +                                                              
+      326 +/* ── 반응형 ─────────────────────────────────────────── */   
+      327 +@media (max-width: 440px) {                                   
+      328 +  .container { padding: 24px 16px; }                          
+      329 +  .category-stats { flex-direction: column; }                 
+      330 +  .filter-area { flex-wrap: wrap; }                           
+      331 +  .input-area { flex-wrap: wrap; }                            
+      332 +  #todo-input { width: 100%; }                                
+      333 +}                                                             
+
+● Write(/c/VibeCodingB/Study-02/script.js)
+  ⎿  Added 119 lines, removed 45 lines
+       1  const STORAGE_KEY = 'my_tasks';
+       2  
+       3 -// 카테고리 메타데이터                                         
+       3  const CATEGORIES = {
+       5 -  work:     { label: '💼 업무', tagClass: 'tag-work' },        
+       6 -  personal: { label: '🏠 개인', tagClass: 'tag-personal' },    
+       7 -  study:    { label: '📚 공부', tagClass: 'tag-study' },       
+       4 +  work:     { label: '💼 업무', tagClass: 'tag-work',     fillI
+         +d: 'fill-work',     countId: 'count-work' },                   
+       5 +  personal: { label: '🏠 개인', tagClass: 'tag-personal', fillI
+         +d: 'fill-personal', countId: 'count-personal' },               
+       6 +  study:    { label: '📚 공부', tagClass: 'tag-study',    fillI
+         +d: 'fill-study',    countId: 'count-study' },                  
+       7  };
+       8  
+      10 -// ── 앱 상태 ────────────────────────────────────────────     
+      11 -let todos       = loadTodos();                                 
+      12 -let activeFilter = 'all';  // 'all' | 'work' | 'personal' | 'st
+         -udy'                                                           
+       9 +// ── 상태 ───────────────────────────────────────────────     
+      10 +let todos        = loadTodos();                                
+      11 +let activeFilter = 'all';                                      
+      12  
+      13  // ── DOM ────────────────────────────────────────────────
+      14  const todoInput      = document.getElementById('todo-input');
+     ...
+      17  const todoList       = document.getElementById('todo-list');
+      18  const filterBtns     = document.querySelectorAll('.filter-btn')
+          ;
+      19  
+      20 +const overallText = document.getElementById('overall-text');   
+      21 +const overallFill = document.getElementById('overall-fill');   
+      22 +const todayNum    = document.getElementById('today-num');      
+      23 +                                                               
+      24  // ── localStorage ───────────────────────────────────────
+      25  function loadTodos() {
+      26    try {
+     ...
+      41      id: Date.now().toString(),
+      42      text: text.trim(),
+      43      completed: false,
+      41 -    category,           // 'work' | 'personal' | 'study'       
+      44 +    category,                                                  
+      45 +    createdAt: new Date().toISOString(),                       
+      46    };
+      47  }
+      48  
+      45 -// ── 렌더링 ─────────────────────────────────────────────     
+      46 -function render() {                                            
+      49 +function todayStr() {                                          
+      50 +  return new Date().toISOString().slice(0, 10); // 'YYYY-MM-DD'
+      51 +}                                                              
+      52 +                                                               
+      53 +// ── 대시보드 렌더 ──────────────────────────────────────     
+      54 +function renderDashboard() {                                   
+      55 +  const total     = todos.length;                              
+      56 +  const completed = todos.filter(t => t.completed).length;     
+      57 +  const pct       = total === 0 ? 0 : Math.round((completed / t
+         +otal) * 100);                                                  
+      58 +                                                               
+      59 +  // 전체 진행률                                               
+      60 +  overallText.textContent = `${completed}/${total} 완료 (${pct}
+         +%)`;                                                           
+      61 +  overallFill.style.width = pct + '%';                         
+      62 +                                                               
+      63 +  // 오늘 추가                                                 
+      64 +  const today = todayStr();                                    
+      65 +  const todayCount = todos.filter(t => t.createdAt.slice(0, 10)
+         + === today).length;                                            
+      66 +  todayNum.textContent = todayCount + '개';                    
+      67 +                                                               
+      68 +  // 카테고리별 미니 진행률                                    
+      69 +  Object.entries(CATEGORIES).forEach(([key, meta]) => {        
+      70 +    const catTodos     = todos.filter(t => t.category === key);
+      71 +    const catTotal     = catTodos.length;                      
+      72 +    const catCompleted = catTodos.filter(t => t.completed).leng
+         +th;                                                            
+      73 +    const catPct       = catTotal === 0 ? 0 : Math.round((catCo
+         +mpleted / catTotal) * 100);                                    
+      74 +                                                               
+      75 +    document.getElementById(meta.countId).textContent = `${catC
+         +ompleted}/${catTotal}`;                                        
+      76 +    document.getElementById(meta.fillId).style.width  = catPct 
+         ++ '%';                                                         
+      77 +  });                                                          
+      78 +}                                                              
+      79 +                                                               
+      80 +// ── 목록 렌더 ──────────────────────────────────────────     
+      81 +function renderList() {                                        
+      82    todoList.innerHTML = '';
+      83  
+      49 -  // 현재 필터에 맞는 항목만 추출                              
+      84    const filtered = activeFilter === 'all'
+      85      ? todos
+      86      : todos.filter(t => t.category === activeFilter);
+     ...
+       94    }
+       95  
+       96    filtered.forEach(todo => {
+       63 -    const li = document.createElement('li');                  
+       64 -    li.className = 'todo-item' + (todo.completed ? ' completed
+          -' : '');                                                      
+       97 +    const li = buildItem(todo);                               
+       98 +    todoList.appendChild(li);                                 
+       99 +  });                                                         
+      100 +}                                                             
+      101  
+       66 -    // 체크박스                                               
+       67 -    const cb = document.createElement('input');               
+       68 -    cb.type = 'checkbox';                                     
+       69 -    cb.checked = todo.completed;                              
+       70 -    cb.addEventListener('change', () => toggleTodo(todo.id)); 
+      102 +function buildItem(todo) {                                    
+      103 +  const li = document.createElement('li');                    
+      104 +  li.className = 'todo-item' + (todo.completed ? ' completed' 
+          +: '');                                                        
+      105 +  li.dataset.id = todo.id;                                    
+      106  
+       72 -    // 텍스트                                                 
+       73 -    const span = document.createElement('span');              
+       74 -    span.className = 'todo-text';                             
+       75 -    span.textContent = todo.text;                             
+      107 +  // 체크박스                                                 
+      108 +  const cb = document.createElement('input');                 
+      109 +  cb.type = 'checkbox';                                       
+      110 +  cb.checked = todo.completed;                                
+      111 +  cb.addEventListener('change', () => toggleTodo(todo.id));   
+      112  
+       77 -    // 카테고리 태그                                          
+       78 -    const tag = document.createElement('span');               
+       79 -    const cat = CATEGORIES[todo.category];                    
+       80 -    tag.className = 'category-tag ' + cat.tagClass;           
+       81 -    tag.textContent = cat.label;                              
+      113 +  // 텍스트 (더블클릭 → 편집)                                 
+      114 +  const span = document.createElement('span');                
+      115 +  span.className = 'todo-text';                               
+      116 +  span.textContent = todo.text;                               
+      117 +  span.title = '더블클릭하여 수정';                           
+      118 +  span.addEventListener('dblclick', () => enterEditMode(li, to
+          +do));                                                         
+      119  
+       83 -    // 삭제 버튼                                              
+       84 -    const delBtn = document.createElement('button');          
+       85 -    delBtn.className = 'del-btn';                             
+       86 -    delBtn.textContent = '삭제';                              
+       87 -    delBtn.addEventListener('click', () => deleteTodo(todo.id)
+          -);                                                            
+      120 +  // 카테고리 태그                                            
+      121 +  const tag = document.createElement('span');                 
+      122 +  tag.className = 'category-tag ' + CATEGORIES[todo.category].
+          +tagClass;                                                     
+      123 +  tag.textContent = CATEGORIES[todo.category].label;          
+      124  
+       89 -    li.append(cb, span, tag, delBtn);                         
+       90 -    todoList.appendChild(li);                                 
+      125 +  // 삭제 버튼                                                
+      126 +  const delBtn = document.createElement('button');            
+      127 +  delBtn.className = 'del-btn';                               
+      128 +  delBtn.textContent = '삭제';                                
+      129 +  delBtn.addEventListener('click', () => deleteTodo(todo.id));
+      130 +                                                              
+      131 +  li.append(cb, span, tag, delBtn);                           
+      132 +  return li;                                                  
+      133 +}                                                             
+      134 +                                                              
+      135 +// ── 인라인 수정 ────────────────────────────────────────    
+      136 +function enterEditMode(li, todo) {                            
+      137 +  const span = li.querySelector('.todo-text');                
+      138 +  if (!span) return;                                          
+      139 +                                                              
+      140 +  const input = document.createElement('input');              
+      141 +  input.type = 'text';                                        
+      142 +  input.className = 'edit-input';                             
+      143 +  input.value = todo.text;                                    
+      144 +  input.maxLength = 100;                                      
+      145 +                                                              
+      146 +  li.replaceChild(input, span);                               
+      147 +  input.focus();                                              
+      148 +  input.select();                                             
+      149 +                                                              
+      150 +  function save() {                                           
+      151 +    const newText = input.value.trim();                       
+      152 +    if (newText && newText !== todo.text) {                   
+      153 +      todos = todos.map(t => t.id === todo.id ? { ...t, text: 
+          +newText } : t);                                               
+      154 +      saveTodos();                                            
+      155 +    }                                                         
+      156 +    render();                                                 
+      157 +  }                                                           
+      158 +                                                              
+      159 +  input.addEventListener('keydown', e => {                    
+      160 +    if (e.key === 'Enter')  { e.preventDefault(); save(); }   
+      161 +    if (e.key === 'Escape') { render(); }                     
+      162    });
+      163 +  input.addEventListener('blur', save);                       
+      164  }
+      165  
+      166 +// ── 전체 렌더 ──────────────────────────────────────────    
+      167 +function render() {                                           
+      168 +  renderDashboard();                                          
+      169 +  renderList();                                               
+      170 +}                                                             
+      171 +                                                              
+      172  // ── 기능 ───────────────────────────────────────────────
+      173  function addTodo() {
+      174    const text = todoInput.value.trim();
+       97 -  if (!text) return;                                          
+       98 -                                                              
+       99 -  const category = categorySelect.value;                      
+      100 -  todos.push(createTodo(text, category));                     
+      175 +  if (!text) {                                                
+      176 +    todoInput.focus();                                        
+      177 +    return;                                                   
+      178 +  }                                                           
+      179 +  todos.push(createTodo(text, categorySelect.value));         
+      180    saveTodos();
+      181    todoInput.value = '';
+      182    todoInput.focus();
+     ...
+      184  }
+      185  
+      186  function toggleTodo(id) {
+      108 -  todos = todos.map(t =>                                      
+      109 -    t.id === id ? { ...t, completed: !t.completed } : t       
+      110 -  );                                                          
+      187 +  todos = todos.map(t => t.id === id ? { ...t, completed: !t.c
+          +ompleted } : t);                                              
+      188    saveTodos();
+      189    render();
+      190  }
+     ...
+      199  filterBtns.forEach(btn => {
+      200    btn.addEventListener('click', () => {
+      201      activeFilter = btn.dataset.filter;
+      125 -                                                              
+      126 -    // 활성 버튼 표시                                         
+      202      filterBtns.forEach(b => b.classList.remove('active'));
+      203      btn.classList.add('active');
+      129 -                                                              
+      130 -    render();                                                 
+      204 +    renderList();                                             
+      205    });
+      206  });
+      207  
+
+● Step 3 완료. 구현된 내용:
+
+  대시보드 (이미지 빨간 박스 영역)
+
+  ┌───────────────────┬─────────────────────────────────────────────────────┐
+  │       요소        │                        설명                         │
+  ├───────────────────┼─────────────────────────────────────────────────────┤
+  │ 전체 진행률       │ X/Y 완료 (Z%) 텍스트 + 인디고 프로그레스 바         │
+  ├───────────────────┼─────────────────────────────────────────────────────┤
+  │ 오늘 추가         │ createdAt 날짜 기준으로 오늘 생성된 항목 수         │
+  ├───────────────────┼─────────────────────────────────────────────────────┤
+  │ 카테고리 미니     │ 업무(파랑) / 개인(초록) / 공부(노랑) 각각 완료/전체 │
+  │ 진행률            │  + 미니 바                                          │
+  └───────────────────┴─────────────────────────────────────────────────────┘
+
+  인라인 수정
+  - 텍스트 더블클릭 → <span> 자리에 <input> 삽입
+  - Enter 또는 포커스 해제 시 저장, Escape 시 취소
+
+  UI
+  - 배경: 인디고 그라디언트 (#3b4fd8 → #818cf8)
+  - 카드: 흰색 둥근 카드, 대시보드는 별도 테두리 박스
+
+✻ Churned for 1m 28s
+
+> 다크/라이트 모드 토글 스위치 + localStorage에 테마 저장                       
+"완료된 항목 모두 삭제" 버튼                                                    
+키보드 단축키 (                                                                 
+Alt+N : 새 할 일,                                                               
+Step 5: 최종 완성 및 최적화                                                     
+Alt+1,2,3,4 : 카테고리 필터)                                                    
+
+● 현재 파일들을 읽고 기능을 추가하겠습니다.
+
+  Read 3 files (ctrl+o to expand)
+
+● 세 파일 모두 수정합니다.
+
+● Update(/c/VibeCodingB/Study-02/index.html)
+  ⎿  Added 12 lines, removed 1 line
+       9  <body>
+      10  
+      11    <div class="container">
+      12 -    <h1>My Tasks</h1>                                          
+      12  
+      13 +    <!-- 헤더: 제목 + 다크모드 토글 -->                        
+      14 +    <div class="app-header">                                   
+      15 +      <h1>My Tasks</h1>                                        
+      16 +      <label class="theme-toggle" title="다크/라이트 모드 (Alt+
+         +D)">                                                           
+      17 +        <input type="checkbox" id="theme-checkbox" />          
+      18 +        <span class="toggle-track">                            
+      19 +          <span class="toggle-thumb"></span>                   
+      20 +        </span>                                                
+      21 +        <span class="toggle-label" id="theme-label">🌙</span>  
+      22 +      </label>                                                 
+      23 +    </div>                                                     
+      24 +                                                               
+      25      <!-- 통계 대시보드 -->
+      26      <div class="dashboard">
+      27  
+
+● Update(/c/VibeCodingB/Study-02/index.html)
+  ⎿  Added 7 lines
+       93  
+       94      <!-- 할 일 목록 -->
+       95      <ul id="todo-list"></ul>
+       96 +                                                              
+       97 +    <!-- 푸터: 완료 항목 삭제 -->                             
+       98 +    <div class="list-footer">                                 
+       99 +      <button id="clear-btn">완료된 항목 모두 삭제</button>   
+      100 +      <span class="shortcut-hint">Alt+N 새 할일 &nbsp;|&nbsp; 
+          +Alt+1~4 필터</span>                                           
+      101 +    </div>                                                    
+      102 +                                                              
+      103    </div>
+      104  
+      105    <script src="script.js"></script>
+
+● 이제 CSS에 다크모드 변수 및 토글 스타일을 추가합니다.
+
+● Update(/c/VibeCodingB/Study-02/style.css)
+  ⎿  Added 60 lines, removed 1 line
+       1 +/* ── CSS 변수: 라이트 모드 ──────────────────────────── */    
+       2 +:root {                                                        
+       3 +  --bg-gradient-a:  #3b4fd8;                                   
+       4 +  --bg-gradient-b:  #6366f1;                                   
+       5 +  --bg-gradient-c:  #818cf8;                                   
+       6 +  --card-bg:        #ffffff;                                   
+       7 +  --card-shadow:    0 8px 40px rgba(0,0,0,0.18);               
+       8 +  --title-color:    #1e1b4b;                                   
+       9 +  --dash-bg:        #f8f9ff;                                   
+      10 +  --dash-border:    #e0e7ff;                                   
+      11 +  --label-color:    #6b7280;                                   
+      12 +  --text-primary:   #1f2937;                                   
+      13 +  --text-muted:     #9ca3af;                                   
+      14 +  --input-bg:       #ffffff;                                   
+      15 +  --input-border:   #e0e7ff;                                   
+      16 +  --item-border:    #f3f4f6;                                   
+      17 +  --cat-card-bg:    #ffffff;                                   
+      18 +  --mini-bar-bg:    #e5e7eb;                                   
+      19 +  --filter-bg:      #ffffff;                                   
+      20 +  --filter-color:   #6b7280;                                   
+      21 +  --today-color:    #4f46e5;                                   
+      22 +  --accent:         #4f46e5;                                   
+      23 +  --accent-hover:   #4338ca;                                   
+      24 +  --del-bg:         #fee2e2;                                   
+      25 +  --del-color:      #dc2626;                                   
+      26 +  --del-hover-bg:   #fecaca;                                   
+      27 +  --footer-color:   #9ca3af;                                   
+      28 +}                                                              
+      29 +                                                               
+      30 +/* ── CSS 변수: 다크 모드 ────────────────────────────── */    
+      31 +body.dark {                                                    
+      32 +  --bg-gradient-a:  #0f0f1a;                                   
+      33 +  --bg-gradient-b:  #1a1a2e;                                   
+      34 +  --bg-gradient-c:  #16213e;                                   
+      35 +  --card-bg:        #1e1e30;                                   
+      36 +  --card-shadow:    0 8px 40px rgba(0,0,0,0.5);                
+      37 +  --title-color:    #e0e0ff;                                   
+      38 +  --dash-bg:        #16162a;                                   
+      39 +  --dash-border:    #2e2e4a;                                   
+      40 +  --label-color:    #8888aa;                                   
+      41 +  --text-primary:   #d1d5db;                                   
+      42 +  --text-muted:     #6b7280;                                   
+      43 +  --input-bg:       #16162a;                                   
+      44 +  --input-border:   #2e2e4a;                                   
+      45 +  --item-border:    #2a2a3e;                                   
+      46 +  --cat-card-bg:    #16162a;                                   
+      47 +  --mini-bar-bg:    #2e2e4a;                                   
+      48 +  --filter-bg:      #16162a;                                   
+      49 +  --filter-color:   #8888aa;                                   
+      50 +  --today-color:    #818cf8;                                   
+      51 +  --accent:         #6366f1;                                   
+      52 +  --accent-hover:   #4f46e5;                                   
+      53 +  --del-bg:         #3b1a1a;                                   
+      54 +  --del-color:      #f87171;                                   
+      55 +  --del-hover-bg:   #4c2020;                                   
+      56 +  --footer-color:   #555577;                                   
+      57 +}                                                              
+      58 +                                                               
+      59  * {
+      60    box-sizing: border-box;
+      61    margin: 0;
+     ...
+      65  body {
+      66    font-family: 'Segoe UI', sans-serif;
+      67    min-height: 100vh;
+      10 -  background: linear-gradient(135deg, #3b4fd8 0%, #6366f1 50%, 
+         -#818cf8 100%);                                                 
+      68 +  background: linear-gradient(135deg, var(--bg-gradient-a) 0%, 
+         +var(--bg-gradient-b) 50%, var(--bg-gradient-c) 100%);          
+      69    display: flex;
+      70    justify-content: center;
+      71    align-items: flex-start;
+      72    padding: 48px 16px 80px;
+      73 +  transition: background 0.3s;                                 
+      74  }
+      75  
+      76  /* ── 카드 ───────────────────────────────────────────── */
+
+● 이제 카드/텍스트/입력 요소들이 CSS 변수를 쓰도록 교체합니다.
+
+● Update(/c/VibeCodingB/Study-02/style.css)
+  ⎿  Added 60 lines, removed 5 lines
+       75  
+       76  /* ── 카드 ───────────────────────────────────────────── */
+       77  .container {
+       78 -  background: #fff;                                           
+       78 +  background: var(--card-bg);                                 
+       79    border-radius: 20px;
+       80 -  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);                 
+       80 +  box-shadow: var(--card-shadow);                             
+       81    padding: 36px 32px 32px;
+       82    width: 100%;
+       83    max-width: 560px;
+       84 +  transition: background 0.3s, box-shadow 0.3s;               
+       85  }
+       86  
+       87 +/* ── 헤더 ───────────────────────────────────────────── */   
+       88 +.app-header {                                                 
+       89 +  display: flex;                                              
+       90 +  align-items: center;                                        
+       91 +  justify-content: space-between;                             
+       92 +  margin-bottom: 24px;                                        
+       93 +}                                                             
+       94 +                                                              
+       95  h1 {
+       96    font-size: 30px;
+       97    font-weight: 700;
+       89 -  color: #1e1b4b;                                             
+       90 -  text-align: center;                                         
+       91 -  margin-bottom: 24px;                                        
+       98 +  color: var(--title-color);                                  
+       99 +  transition: color 0.3s;                                     
+      100  }
+      101  
+      102 +/* ── 다크모드 토글 ──────────────────────────────────── */   
+      103 +.theme-toggle {                                               
+      104 +  display: flex;                                              
+      105 +  align-items: center;                                        
+      106 +  gap: 8px;                                                   
+      107 +  cursor: pointer;                                            
+      108 +  user-select: none;                                          
+      109 +}                                                             
+      110 +                                                              
+      111 +.theme-toggle input {                                         
+      112 +  display: none;                                              
+      113 +}                                                             
+      114 +                                                              
+      115 +.toggle-track {                                               
+      116 +  width: 44px;                                                
+      117 +  height: 24px;                                               
+      118 +  background: #e0e7ff;                                        
+      119 +  border-radius: 99px;                                        
+      120 +  position: relative;                                         
+      121 +  transition: background 0.3s;                                
+      122 +}                                                             
+      123 +                                                              
+      124 +body.dark .toggle-track {                                     
+      125 +  background: #4f46e5;                                        
+      126 +}                                                             
+      127 +                                                              
+      128 +.toggle-thumb {                                               
+      129 +  position: absolute;                                         
+      130 +  top: 3px;                                                   
+      131 +  left: 3px;                                                  
+      132 +  width: 18px;                                                
+      133 +  height: 18px;                                               
+      134 +  background: #fff;                                           
+      135 +  border-radius: 50%;                                         
+      136 +  transition: transform 0.25s ease;                           
+      137 +  box-shadow: 0 1px 4px rgba(0,0,0,0.2);                      
+      138 +}                                                             
+      139 +                                                              
+      140 +body.dark .toggle-thumb {                                     
+      141 +  transform: translateX(20px);                                
+      142 +}                                                             
+      143 +                                                              
+      144 +.toggle-label {                                               
+      145 +  font-size: 18px;                                            
+      146 +  line-height: 1;                                             
+      147 +}                                                             
+      148 +                                                              
+      149  /* ── 대시보드 ────────────────────────────────────────── */
+      150  .dashboard {
+      151    border: 1.5px solid #e0e7ff;
+
+● Update(/c/VibeCodingB/Study-02/style.css)
+  ⎿  Added 3 lines, removed 2 lines
+      148  
+      149  /* ── 대시보드 ────────────────────────────────────────── */
+      150  .dashboard {
+      151 -  border: 1.5px solid #e0e7ff;                                
+      151 +  border: 1.5px solid var(--dash-border);                     
+      152    border-radius: 14px;
+      153    padding: 18px 20px;
+      154    margin-bottom: 20px;
+      155 -  background: #f8f9ff;                                        
+      155 +  background: var(--dash-bg);                                 
+      156 +  transition: background 0.3s, border-color 0.3s;             
+      157  }
+      158  
+      159  /* 전체 진행률 + 오늘 추가 */
+
+● Update(/c/VibeCodingB/Study-02/style.css)
+  ⎿  Added 5 lines, removed 3 lines
+      174  .dash-label {
+      175    font-size: 11px;
+      176    font-weight: 600;
+      177 -  color: #6b7280;                                             
+      177 +  color: var(--label-color);                                  
+      178    text-transform: uppercase;
+      179    letter-spacing: 0.05em;
+      180 +  transition: color 0.3s;                                     
+      181  }
+      182  
+      183  .overall-text {
+      184    font-size: 16px;
+      185    font-weight: 700;
+      185 -  color: #1e1b4b;                                             
+      186 +  color: var(--title-color);                                  
+      187 +  transition: color 0.3s;                                     
+      188  }
+      189  
+      190  .progress-bar {
+      191    height: 8px;
+      190 -  background: #e0e7ff;                                        
+      192 +  background: var(--dash-border);                             
+      193    border-radius: 99px;
+      194    overflow: hidden;
+      195  }
+
+● Update(/c/VibeCodingB/Study-02/style.css)
+  ⎿  Added 2 lines, removed 1 line
+      213  .today-num {
+      214    font-size: 26px;
+      215    font-weight: 800;
+      216 -  color: #4f46e5;                                             
+      216 +  color: var(--today-color);                                  
+      217    line-height: 1;
+      218 +  transition: color 0.3s;                                     
+      219  }
+      220  
+      221  /* ── 카테고리별 미니 진행률 ─────────────────────────── */
+
+● Update(/c/VibeCodingB/Study-02/style.css)
+  ⎿  Added 9 lines, removed 5 lines
+      226  
+      227  .cat-stat {
+      228    flex: 1;
+      229 -  background: #fff;                                           
+      230 -  border: 1px solid #e0e7ff;                                  
+      229 +  background: var(--cat-card-bg);                             
+      230 +  border: 1px solid var(--dash-border);                       
+      231    border-radius: 10px;
+      232    padding: 10px 12px;
+      233    display: flex;
+      234    flex-direction: column;
+      235    gap: 5px;
+      236 +  transition: background 0.3s, border-color 0.3s;             
+      237  }
+      238  
+      239  .cat-stat-label {
+      240    font-size: 12px;
+      241    font-weight: 600;
+      241 -  color: #374151;                                             
+      242 +  color: var(--text-primary);                                 
+      243 +  transition: color 0.3s;                                     
+      244  }
+      245  
+      246  .cat-stat-count {
+      247    font-size: 13px;
+      248    font-weight: 700;
+      247 -  color: #1e1b4b;                                             
+      249 +  color: var(--title-color);                                  
+      250 +  transition: color 0.3s;                                     
+      251  }
+      252  
+      253  .mini-bar {
+      254    height: 5px;
+      252 -  background: #e5e7eb;                                        
+      255 +  background: var(--mini-bar-bg);                             
+      256    border-radius: 99px;
+      257    overflow: hidden;
+      258 +  transition: background 0.3s;                                
+      259  }
+      260  
+      261  .mini-fill {
+● Update(/c/VibeCodingB/Study-02/style.css)
+  ⎿  Added 7 lines, removed 7 lines
+      279  .filter-btn {
+      280    flex: 1;
+      281    padding: 8px 0;
+      282 -  border: 1.5px solid #e0e7ff;                                
+      282 +  border: 1.5px solid var(--input-border);                    
+      283    border-radius: 8px;
+      284 -  background: #fff;                                           
+      285 -  color: #6b7280;                                             
+      284 +  background: var(--filter-bg);                               
+      285 +  color: var(--filter-color);                                 
+      286    font-size: 13px;
+      287    font-weight: 500;
+      288    cursor: pointer;
+     ...
+      290  }
+      291  
+      292  .filter-btn:hover {
+      293 -  border-color: #6366f1;                                      
+      294 -  color: #4f46e5;                                             
+      293 +  border-color: var(--accent);                                
+      294 +  color: var(--accent);                                       
+      295  }
+      296  
+      297  .filter-btn.active {
+      298 -  background: #4f46e5;                                        
+      299 -  border-color: #4f46e5;                                      
+      298 +  background: var(--accent);                                  
+      299 +  border-color: var(--accent);                                
+      300    color: #fff;
+      301  }
+      302  
+
+● Update(/c/VibeCodingB/Study-02/style.css)
+  ⎿  Added 12 lines, removed 11 lines
+      309  
+      310  #category-select {
+      311    padding: 10px 10px;
+      312 -  border: 1.5px solid #e0e7ff;                                
+      312 +  border: 1.5px solid var(--input-border);                    
+      313    border-radius: 8px;
+      314    font-size: 14px;
+      315 -  color: #374151;                                             
+      316 -  background: #fff;                                           
+      315 +  color: var(--text-primary);                                 
+      316 +  background: var(--input-bg);                                
+      317    cursor: pointer;
+      318    outline: none;
+      319 -  transition: border-color 0.2s;                              
+      319 +  transition: border-color 0.2s, background 0.3s, color 0.3s; 
+      320  }
+      321  
+      322  #category-select:focus {
+      323 -  border-color: #6366f1;                                      
+      323 +  border-color: var(--accent);                                
+      324  }
+      325  
+      326  #todo-input {
+      327    flex: 1;
+      328    padding: 10px 14px;
+      329 -  border: 1.5px solid #e0e7ff;                                
+      329 +  border: 1.5px solid var(--input-border);                    
+      330    border-radius: 8px;
+      331    font-size: 14px;
+      332    outline: none;
+      333 -  transition: border-color 0.2s;                              
+      334 -  color: #1e1b4b;                                             
+      333 +  transition: border-color 0.2s, background 0.3s, color 0.3s; 
+      334 +  color: var(--text-primary);                                 
+      335 +  background: var(--input-bg);                                
+      336  }
+      337  
+      338  #todo-input:focus {
+      338 -  border-color: #6366f1;                                      
+      339 +  border-color: var(--accent);                                
+      340  }
+      341  
+      342  #add-btn {
+      343    padding: 10px 20px;
+      343 -  background: #4f46e5;                                        
+      344 +  background: var(--accent);                                  
+      345    color: #fff;
+      346    border: none;
+      347    border-radius: 8px;
+     ...
+      353  }
+      354  
+      355  #add-btn:hover {
+      355 -  background: #4338ca;                                        
+      356 +  background: var(--accent-hover);                            
+      357  }
+      358  
+      359  /* ── 할 일 목록 ─────────────────────────────────────── */
+
+● Update(/c/VibeCodingB/Study-02/style.css)
+  ⎿  Added 9 lines, removed 6 lines
+      366    align-items: center;
+      367    gap: 12px;
+      368    padding: 12px 6px;
+      369 -  border-bottom: 1px solid #f3f4f6;                           
+      369 +  border-bottom: 1px solid var(--item-border);                
+      370 +  transition: border-color 0.3s;                              
+      371  }
+      372  
+      373  .todo-item:last-child {
+     ...
+      378    width: 18px;
+      379    height: 18px;
+      380    cursor: pointer;
+      380 -  accent-color: #4f46e5;                                      
+      381 +  accent-color: var(--accent);                                
+      382    flex-shrink: 0;
+      383  }
+      384  
+      385  .todo-text {
+      386    flex: 1;
+      387    font-size: 15px;
+      387 -  color: #1f2937;                                             
+      388 +  color: var(--text-primary);                                 
+      389    cursor: text;
+      390    word-break: break-word;
+      391    line-height: 1.4;
+      392 +  transition: color 0.3s;                                     
+      393  }
+      394  
+      395  .todo-item.completed .todo-text {
+      396    text-decoration: line-through;
+      395 -  color: #9ca3af;                                             
+      397 +  color: var(--text-muted);                                   
+      398  }
+      399  
+      400  /* 인라인 수정 input */
+      401  .edit-input {
+      402    flex: 1;
+      403    font-size: 15px;
+      402 -  color: #1f2937;                                             
+      404 +  color: var(--text-primary);                                 
+      405    border: none;
+      404 -  border-bottom: 2px solid #4f46e5;                           
+      406 +  border-bottom: 2px solid var(--accent);                     
+      407    outline: none;
+      408    background: transparent;
+      409    padding: 2px 0;
+      410 +  transition: color 0.3s;                                     
+      411  }
+      412  
+      413  /* ── 카테고리 태그 ──────────────────────────────────── */
+
+● Update(/c/VibeCodingB/Study-02/style.css)
+  ⎿  Added 42 lines, removed 5 lines
+      427  /* ── 삭제 버튼 ──────────────────────────────────────── */
+      428  .del-btn {
+      429    padding: 4px 10px;
+      430 -  background: #fee2e2;                                        
+      431 -  color: #dc2626;                                             
+      430 +  background: var(--del-bg);                                  
+      431 +  color: var(--del-color);                                    
+      432    border: none;
+      433    border-radius: 6px;
+      434    font-size: 12px;
+      435    cursor: pointer;
+      436    flex-shrink: 0;
+      437 -  transition: background 0.2s;                                
+      437 +  transition: background 0.2s, color 0.3s;                    
+      438  }
+      439  
+      440  .del-btn:hover {
+      441 -  background: #fecaca;                                        
+      441 +  background: var(--del-hover-bg);                            
+      442  }
+      443  
+      444  /* ── 빈 상태 ────────────────────────────────────────── */
+      445  .empty-msg {
+      446    text-align: center;
+      447 -  color: #9ca3af;                                             
+      447 +  color: var(--text-muted);                                   
+      448    font-size: 14px;
+      449    padding: 36px 0;
+      450  }
+      451  
+      452 +/* ── 푸터 (완료 삭제 + 단축키 힌트) ────────────────── */    
+      453 +.list-footer {                                                
+      454 +  display: flex;                                              
+      455 +  align-items: center;                                        
+      456 +  justify-content: space-between;                             
+      457 +  margin-top: 16px;                                           
+      458 +  padding-top: 14px;                                          
+      459 +  border-top: 1px solid var(--item-border);                   
+      460 +  gap: 12px;                                                  
+      461 +  transition: border-color 0.3s;                              
+      462 +}                                                             
+      463 +                                                              
+      464 +#clear-btn {                                                  
+      465 +  padding: 7px 14px;                                          
+      466 +  background: var(--del-bg);                                  
+      467 +  color: var(--del-color);                                    
+      468 +  border: none;                                               
+      469 +  border-radius: 8px;                                         
+      470 +  font-size: 13px;                                            
+      471 +  font-weight: 500;                                           
+      472 +  cursor: pointer;                                            
+      473 +  transition: background 0.2s, color 0.3s;                    
+      474 +  white-space: nowrap;                                        
+      475 +}                                                             
+      476 +                                                              
+      477 +#clear-btn:hover {                                            
+      478 +  background: var(--del-hover-bg);                            
+      479 +}                                                             
+      480 +                                                              
+      481 +.shortcut-hint {                                              
+      482 +  font-size: 11px;                                            
+      483 +  color: var(--footer-color);                                 
+      484 +  text-align: right;                                          
+      485 +  line-height: 1.5;                                           
+      486 +  transition: color 0.3s;                                     
+      487 +}                                                             
+      488 +                                                              
+      489  /* ── 반응형 ─────────────────────────────────────────── */
+      490  @media (max-width: 440px) {
+      491    .container { padding: 24px 16px; }
+
+● 이제 script.js에 테마 저장, clearCompleted, 키보드 단축키를 추가합니다.
+
+● Update(/c/VibeCodingB/Study-02/script.js)
+  ⎿  Added 2 lines, removed 1 line
+      1 -const STORAGE_KEY = 'my_tasks';                                 
+      1 +const STORAGE_KEY  = 'my_tasks';                                
+      2 +const THEME_KEY    = 'my_tasks_theme';                          
+      3  
+      4  const CATEGORIES = {
+      5    work:     { label: '💼 업무', tagClass: 'tag-work',     fillId
+         : 'fill-work',     countId: 'count-work' },
+
+● Update(/c/VibeCodingB/Study-02/script.js)
+  ⎿  Added 3 lines
+      17  const addBtn         = document.getElementById('add-btn');
+      18  const todoList       = document.getElementById('todo-list');
+      19  const filterBtns     = document.querySelectorAll('.filter-btn')
+          ;
+      20 +const clearBtn       = document.getElementById('clear-btn');   
+      21 +const themeCheckbox  = document.getElementById('theme-checkbox'
+         +);                                                             
+      22 +const themeLabel     = document.getElementById('theme-label'); 
+      23  
+      24  const overallText = document.getElementById('overall-text');
+      25  const overallFill = document.getElementById('overall-fill');
+
+● Update(/c/VibeCodingB/Study-02/script.js)
+  ⎿  Added 17 lines
+      39    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+      40  }
+      41  
+      42 +// ── 다크/라이트 모드 ────────────────────────────────────    
+      43 +function applyTheme(isDark) {                                  
+      44 +  document.body.classList.toggle('dark', isDark);              
+      45 +  themeCheckbox.checked = isDark;                              
+      46 +  themeLabel.textContent = isDark ? '☀️' : '🌙';               
+      47 +  localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');  
+      48 +}                                                              
+      49 +                                                               
+      50 +function initTheme() {                                         
+      51 +  const saved = localStorage.getItem(THEME_KEY);               
+      52 +  applyTheme(saved === 'dark');                                
+      53 +}                                                              
+      54 +                                                               
+      55 +themeCheckbox.addEventListener('change', () => {               
+      56 +  applyTheme(themeCheckbox.checked);                           
+      57 +});                                                            
+      58 +                                                               
+      59  // ── 데이터 ─────────────────────────────────────────────
+      60  function createTodo(text, category) {
+      61    return {
+
+● Update(/c/VibeCodingB/Study-02/script.js)
+  ⎿  Added 9 lines
+      216    render();
+      217  }
+      218  
+      219 +function clearCompleted() {                                   
+      220 +  const count = todos.filter(t => t.completed).length;        
+      221 +  if (count === 0) return;                                    
+      222 +  if (!confirm(`완료된 항목 ${count}개를 모두 삭제할까요?`)) r
+          +eturn;                                                        
+      223 +  todos = todos.filter(t => !t.completed);                    
+      224 +  saveTodos();                                                
+      225 +  render();                                                   
+      226 +}                                                             
+      227 +                                                              
+      228  // ── 필터 ───────────────────────────────────────────────
+      229  filterBtns.forEach(btn => {
+      230    btn.addEventListener('click', () => {
+
+● Update(/c/VibeCodingB/Study-02/script.js)
+  ⎿  Added 29 lines, removed 1 line
+      237  
+      238  // ── 이벤트 ─────────────────────────────────────────────
+      239  addBtn.addEventListener('click', addTodo);
+      240 +clearBtn.addEventListener('click', clearCompleted);           
+      241  todoInput.addEventListener('keydown', e => {
+      242    if (e.key === 'Enter') addTodo();
+      243  });
+      244  
+      244 -// ── 초기 렌더 ──────────────────────────────────────────    
+      245 +// ── 키보드 단축키 ──────────────────────────────────────    
+      246 +// Alt+N : 입력창 포커스                                      
+      247 +// Alt+1 : 전체 필터  Alt+2 : 업무  Alt+3 : 개인  Alt+4 : 공부
+      248 +const FILTER_KEYS = { '1': 'all', '2': 'work', '3': 'personal'
+          +, '4': 'study' };                                             
+      249 +                                                              
+      250 +document.addEventListener('keydown', e => {                   
+      251 +  if (!e.altKey) return;                                      
+      252 +                                                              
+      253 +  if (e.key === 'n' || e.key === 'N') {                       
+      254 +    e.preventDefault();                                       
+      255 +    todoInput.focus();                                        
+      256 +    todoInput.select();                                       
+      257 +    return;                                                   
+      258 +  }                                                           
+      259 +                                                              
+      260 +  if (FILTER_KEYS[e.key]) {                                   
+      261 +    e.preventDefault();                                       
+      262 +    const filter = FILTER_KEYS[e.key];                        
+      263 +    activeFilter = filter;                                    
+      264 +    filterBtns.forEach(b => {                                 
+      265 +      b.classList.toggle('active', b.dataset.filter === filter
+          +);                                                            
+      266 +    });                                                       
+      267 +    renderList();                                             
+      268 +  }                                                           
+      269 +});                                                           
+      270 +                                                              
+      271 +// ── 초기화 ─────────────────────────────────────────────    
+      272 +initTheme();                                                  
+      273  render();
+
+● 완료. 추가된 내용 정리:
+
+  다크/라이트 모드
+  - 헤더 우측 토글 스위치로 전환 (🌙 / ☀️)
+  - CSS 변수 시스템 (--card-bg, --text-primary 등) 으로 모든 색상 관리 →
+  body.dark 클래스 하나로 전환
+  - localStorage의 my_tasks_theme 키에 저장, 새로고침 후에도 유지
+
+  완료된 항목 모두 삭제
+  - 목록 하단 푸터에 빨간 "완료된 항목 모두 삭제" 버튼 추가
+  - 완료 항목이 없으면 동작 안 함, 있으면 확인 다이얼로그 후 삭제
+
+  키보드 단축키 (단축키 힌트 푸터에 표시)
+
+  ┌────────┬───────────────┐
+  │ 단축키 │     동작      │
+  ├────────┼───────────────┤
+  │ Alt+N  │ 입력창 포커스 │
+  ├────────┼───────────────┤
+  │ Alt+1  │ 전체 필터     │
+  ├────────┼───────────────┤
+  │ Alt+2  │ 업무 필터     │
+  ├────────┼───────────────┤
+  │ Alt+3  │ 개인 필터     │
+  ├────────┼───────────────┤
+  │ Alt+4  │ 공부 필터     │
+  └────────┴───────────────┘
+
+✻ Sautéed for 2m 11s
+
+> 전체 진행률 박스에 포함된 업무, 개인, 공부 박스를 드래그하여 서로 위치를      
+변경할 수 있게 수정해줘                                                         
+
+  Read 2 files (ctrl+o to expand)
+
+● 전략: 카테고리 박스를 HTML 정적 마크업에서 분리해 JS로 동적 렌더링하고, HTML5
+  Drag & Drop API로 순서를 조작합니다. 순서는 localStorage에 저장합니다.
+
+  HTML에서 하드코딩된 cat-stat 제거:
+
+● Update(/c/VibeCodingB/Study-02/index.html)
+  ⎿  Added 2 lines, removed 24 lines
+      40          </div>
+      41        </div>
+      42  
+      43 -      <!-- 카테고리별 미니 진행률 -->                          
+      44 -      <div class="category-stats">                             
+      45 -        <div class="cat-stat" id="stat-work">                  
+      46 -          <span class="cat-stat-label">💼 업무</span>          
+      47 -          <span class="cat-stat-count" id="count-work">0/0</spa
+         -n>                                                             
+      48 -          <div class="mini-bar">                               
+      49 -            <div class="mini-fill fill-work" id="fill-work"></d
+         -iv>                                                            
+      50 -          </div>                                               
+      51 -        </div>                                                 
+      52 -        <div class="cat-stat" id="stat-personal">              
+      53 -          <span class="cat-stat-label">🏠 개인</span>          
+      54 -          <span class="cat-stat-count" id="count-personal">0/0<
+         -/span>                                                         
+      55 -          <div class="mini-bar">                               
+      56 -            <div class="mini-fill fill-personal" id="fill-perso
+         -nal"></div>                                                    
+      57 -          </div>                                               
+      58 -        </div>                                                 
+      59 -        <div class="cat-stat" id="stat-study">                 
+      60 -          <span class="cat-stat-label">📚 공부</span>          
+      61 -          <span class="cat-stat-count" id="count-study">0/0</sp
+         -an>                                                            
+      62 -          <div class="mini-bar">                               
+      63 -            <div class="mini-fill fill-study" id="fill-study"><
+         -/div>                                                          
+      64 -          </div>                                               
+      65 -        </div>                                                 
+      66 -      </div>                                                   
+      43 +      <!-- 카테고리별 미니 진행률 (JS로 동적 렌더) -->         
+      44 +      <div class="category-stats" id="category-stats"></div>   
+      45      </div>
+      46  
+      47      <!-- 필터 버튼 -->
+
+● CSS에 드래그 시각 피드백 추가:
+
+● Update(/c/VibeCodingB/Study-02/style.css)
+  ⎿  Added 21 lines, removed 2 lines
+      227  .cat-stat {
+      228    flex: 1;
+      229    background: var(--cat-card-bg);
+      230 -  border: 1px solid var(--dash-border);                       
+      230 +  border: 2px solid var(--dash-border);                       
+      231    border-radius: 10px;
+      232    padding: 10px 12px;
+      233    display: flex;
+      234    flex-direction: column;
+      235    gap: 5px;
+      236 -  transition: background 0.3s, border-color 0.3s;             
+      236 +  cursor: grab;                                               
+      237 +  transition: background 0.3s, border-color 0.2s, opacity 0.2s
+          +, transform 0.2s;                                             
+      238 +  user-select: none;                                          
+      239  }
+      240  
+      241 +.cat-stat:active {                                            
+      242 +  cursor: grabbing;                                           
+      243 +}                                                             
+      244 +                                                              
+      245 +/* 드래그 중인 카드 */                                        
+      246 +.cat-stat.dragging {                                          
+      247 +  opacity: 0.35;                                              
+      248 +  transform: scale(0.97);                                     
+      249 +}                                                             
+      250 +                                                              
+      251 +/* 드롭 대상으로 hover된 카드 */                              
+      252 +.cat-stat.drag-over {                                         
+      253 +  border-color: var(--accent);                                
+      254 +  border-style: dashed;                                       
+      255 +  background: var(--dash-bg);                                 
+      256 +}                                                             
+      257 +                                                              
+      258  .cat-stat-label {
+      259    font-size: 12px;
+      260    font-weight: 600;
+
+● script.js — 순서 저장/로드 + 동적 렌더 + 드래그 앤 드롭:
+
+● Update(/c/VibeCodingB/Study-02/script.js)
+  ⎿  Added 1 line
+      1  const STORAGE_KEY  = 'my_tasks';
+      2  const THEME_KEY    = 'my_tasks_theme';
+      3 +const ORDER_KEY    = 'my_tasks_cat_order';                      
+      4  
+      5  const CATEGORIES = {
+      6    work:     { label: '💼 업무', tagClass: 'tag-work',     fillId
+         : 'fill-work',     countId: 'count-work' },
+
+● Update(/c/VibeCodingB/Study-02/script.js)
+  ⎿  Added 3 lines, removed 2 lines
+       9  };
+      10  
+      11  // ── 상태 ───────────────────────────────────────────────
+      12 -let todos        = loadTodos();                                
+      13 -let activeFilter = 'all';                                      
+      12 +let todos         = loadTodos();                               
+      13 +let activeFilter  = 'all';                                     
+      14 +let categoryOrder = loadOrder();  // ['work', 'personal', 'stud
+         +y'] 순서 배열                                                  
+      15  
+      16  // ── DOM ────────────────────────────────────────────────
+      17  const todoInput      = document.getElementById('todo-input');
+
+● Update(/c/VibeCodingB/Study-02/script.js)
+  ⎿  Added 1 line
+      14  let categoryOrder = loadOrder();  // ['work', 'personal', 'stud
+          y'] 순서 배열
+      15  
+      16  // ── DOM ────────────────────────────────────────────────
+      17 +const categoryStats  = document.getElementById('category-stats'
+         +);                                                             
+      18  const todoInput      = document.getElementById('todo-input');
+      19  const categorySelect = document.getElementById('category-select
+          ');
+      20  const addBtn         = document.getElementById('add-btn');
+
+● Update(/c/VibeCodingB/Study-02/script.js)
+  ⎿  Added 17 lines
+      42    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+      43  }
+      44  
+      45 +function loadOrder() {                                         
+      46 +  try {                                                        
+      47 +    const raw = localStorage.getItem(ORDER_KEY);               
+      48 +    const parsed = raw ? JSON.parse(raw) : null;               
+      49 +    // 저장된 순서가 유효한 3개 키를 모두 포함하는지 검증      
+      50 +    const keys = Object.keys(CATEGORIES);                      
+      51 +    if (parsed && parsed.length === keys.length && keys.every(k
+         + => parsed.includes(k))) {                                     
+      52 +      return parsed;                                           
+      53 +    }                                                          
+      54 +  } catch { /* ignore */ }                                     
+      55 +  return Object.keys(CATEGORIES);  // 기본값: ['work', 'persona
+         +l', 'study']                                                   
+      56 +}                                                              
+      57 +                                                               
+      58 +function saveOrder() {                                         
+      59 +  localStorage.setItem(ORDER_KEY, JSON.stringify(categoryOrder)
+         +);                                                             
+      60 +}                                                              
+      61 +                                                               
+      62  // ── 다크/라이트 모드 ────────────────────────────────────
+      63  function applyTheme(isDark) {
+      64    document.body.classList.toggle('dark', isDark);
+● 이제 renderDashboard에서 카테고리 부분을 분리하고 드래그 로직을 추가합니다:
+
+● Update(/c/VibeCodingB/Study-02/script.js)
+  ⎿  Added 72 lines, removed 10 lines
+       97    const completed = todos.filter(t => t.completed).length;
+       98    const pct       = total === 0 ? 0 : Math.round((completed / 
+           total) * 100);
+       99  
+      100 -  // 전체 진행률                                              
+      100    overallText.textContent = `${completed}/${total} 완료 (${pct
+           }%)`;
+      101    overallFill.style.width = pct + '%';
+      102  
+      104 -  // 오늘 추가                                                
+      103    const today = todayStr();
+      104    const todayCount = todos.filter(t => t.createdAt.slice(0, 10
+           ) === today).length;
+      105    todayNum.textContent = todayCount + '개';
+      106  
+      109 -  // 카테고리별 미니 진행률                                   
+      110 -  Object.entries(CATEGORIES).forEach(([key, meta]) => {       
+      111 -    const catTodos     = todos.filter(t => t.category === key)
+          -;                                                             
+      112 -    const catTotal     = catTodos.length;                     
+      113 -    const catCompleted = catTodos.filter(t => t.completed).len
+          -gth;                                                          
+      114 -    const catPct       = catTotal === 0 ? 0 : Math.round((catC
+          -ompleted / catTotal) * 100);                                  
+      107 +  renderCategoryStats();                                      
+      108 +}                                                             
+      109  
+      116 -    document.getElementById(meta.countId).textContent = `${cat
+          -Completed}/${catTotal}`;                                      
+      117 -    document.getElementById(meta.fillId).style.width  = catPct
+          - + '%';                                                       
+      110 +// ── 카테고리 카드 렌더 (순서 반영 + 드래그 바인딩) ────     
+      111 +function renderCategoryStats() {                              
+      112 +  categoryStats.innerHTML = '';                               
+      113 +                                                              
+      114 +  categoryOrder.forEach(key => {                              
+      115 +    const meta       = CATEGORIES[key];                       
+      116 +    const catTodos   = todos.filter(t => t.category === key); 
+      117 +    const catTotal   = catTodos.length;                       
+      118 +    const catDone    = catTodos.filter(t => t.completed).lengt
+          +h;                                                            
+      119 +    const catPct     = catTotal === 0 ? 0 : Math.round((catDon
+          +e / catTotal) * 100);                                         
+      120 +                                                              
+      121 +    const card = document.createElement('div');               
+      122 +    card.className   = 'cat-stat';                            
+      123 +    card.draggable   = true;                                  
+      124 +    card.dataset.key = key;                                   
+      125 +                                                              
+      126 +    card.innerHTML = `                                        
+      127 +      <span class="cat-stat-label">${meta.label}</span>       
+      128 +      <span class="cat-stat-count">${catDone}/${catTotal}</spa
+          +n>                                                            
+      129 +      <div class="mini-bar">                                  
+      130 +        <div class="mini-fill fill-${key}" style="width:${catP
+          +ct}%"></div>                                                  
+      131 +      </div>`;                                                
+      132 +                                                              
+      133 +    bindDrag(card);                                           
+      134 +    categoryStats.appendChild(card);                          
+      135    });
+      136  }
+      137  
+      138 +// ── 드래그 앤 드롭 ─────────────────────────────────────    
+      139 +let dragSrcKey = null;  // 드래그 시작한 카드의 category key  
+      140 +                                                              
+      141 +function bindDrag(card) {                                     
+      142 +  card.addEventListener('dragstart', e => {                   
+      143 +    dragSrcKey = card.dataset.key;                            
+      144 +    card.classList.add('dragging');                           
+      145 +    e.dataTransfer.effectAllowed = 'move';                    
+      146 +  });                                                         
+      147 +                                                              
+      148 +  card.addEventListener('dragend', () => {                    
+      149 +    card.classList.remove('dragging');                        
+      150 +    categoryStats.querySelectorAll('.cat-stat').forEach(c => c
+          +.classList.remove('drag-over'));                              
+      151 +  });                                                         
+      152 +                                                              
+      153 +  card.addEventListener('dragover', e => {                    
+      154 +    e.preventDefault();                                       
+      155 +    e.dataTransfer.dropEffect = 'move';                       
+      156 +    if (card.dataset.key !== dragSrcKey) {                    
+      157 +      categoryStats.querySelectorAll('.cat-stat').forEach(c =>
+          + c.classList.remove('drag-over'));                            
+      158 +      card.classList.add('drag-over');                        
+      159 +    }                                                         
+      160 +  });                                                         
+      161 +                                                              
+      162 +  card.addEventListener('dragleave', () => {                  
+      163 +    card.classList.remove('drag-over');                       
+      164 +  });                                                         
+      165 +                                                              
+      166 +  card.addEventListener('drop', e => {                        
+      167 +    e.preventDefault();                                       
+      168 +    const targetKey = card.dataset.key;                       
+      169 +    if (!dragSrcKey || dragSrcKey === targetKey) return;      
+      170 +                                                              
+      171 +    // 순서 배열에서 src를 꺼내 target 위치에 삽입            
+      172 +    const srcIdx = categoryOrder.indexOf(dragSrcKey);         
+      173 +    const tgtIdx = categoryOrder.indexOf(targetKey);          
+      174 +    categoryOrder.splice(srcIdx, 1);                          
+      175 +    categoryOrder.splice(tgtIdx, 0, dragSrcKey);              
+      176 +                                                              
+      177 +    saveOrder();                                              
+      178 +    renderCategoryStats();                                    
+      179 +    dragSrcKey = null;                                        
+      180 +  });                                                         
+      181 +}                                                             
+      182 +                                                              
+      183  // ── 목록 렌더 ──────────────────────────────────────────
+      184  function renderList() {
+      185    todoList.innerHTML = '';
+
+● 완료. 동작 방식 정리:
+
+  구조 변경
+  - HTML의 하드코딩된 세 cat-stat 박스를 제거하고, <div id="category-stats">
+  컨테이너만 남김
+  - JS의 renderCategoryStats()가 categoryOrder 배열 순서대로 카드를 동적 생성
+
+  드래그 앤 드롭 흐름
+
+  ┌───────────┬──────────────────────────────────────────────────────────────┐
+  │  이벤트   │                             동작                             │
+  ├───────────┼──────────────────────────────────────────────────────────────┤
+  │ dragstart │ dragSrcKey 저장, 드래그 카드에 .dragging (반투명) 적용       │
+  ├───────────┼──────────────────────────────────────────────────────────────┤
+  │ dragover  │ 드롭 대상 카드에 .drag-over (점선 강조 테두리) 표시          │
+  ├───────────┼──────────────────────────────────────────────────────────────┤
+  │ drop      │ categoryOrder 배열에서 src를 꺼내 target 위치에 삽입 →       │
+  │           │ 재렌더                                                       │
+  ├───────────┼──────────────────────────────────────────────────────────────┤
+  │ dragend   │ 클래스 정리                                                  │
+  └───────────┴──────────────────────────────────────────────────────────────┘
+
+  순서 영속성
+  - 드롭 완료 시 categoryOrder를 my_tasks_cat_order 키로 localStorage 저장
+  - 페이지 새로고침 후에도 마지막 순서 유지
+
+✻ Cogitated for 1m 9s
